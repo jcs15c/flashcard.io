@@ -3,11 +3,9 @@ package edu.fsu.cs.mobile.testdatabase;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -27,7 +25,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
     @Override
     @NonNull
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.recyclerview_item, parent, false);
+        View view = mInflater.inflate(R.layout.card_grid_item, parent, false);
         return new ViewHolder( view );
     }
 
@@ -53,7 +51,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
 
         ViewHolder( View itemView ) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.textView);
+            myTextView = itemView.findViewById(R.id.card_grid_item);
             itemView.setOnClickListener(this);
         }
 

@@ -1,5 +1,6 @@
 package edu.fsu.cs.mobile.testdatabase.Database;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Room;
@@ -7,6 +8,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import edu.fsu.cs.mobile.testdatabase.Model.Card;
 
@@ -51,6 +53,20 @@ public class CardRepository {
     public LiveData<List<Card>> getAllCards() { return cardDatabase.cardDAO().getAllCards(); }
     public LiveData<List<Card>> getFullSet(String setName) {
         return cardDatabase.cardDAO().getFullSet(setName);
+    }
+
+    public int countAllCards() {
+        try {
+            return new AsyncTask<Void, Void, Integer>() {
+                @Override
+                protected Integer doInBackground(Void... voids) {
+                    return cardDatabase.cardDAO().countAllCards();
+                }
+            }.execute().get();
+        } catch( java.util.concurrent.ExecutionException e ) { return -1; }
+          catch( java.lang.InterruptedException e ) { return -1; }
+
+
     }
 
     public void deleteCard(final int id) {
@@ -105,4 +121,6 @@ public class CardRepository {
             }
         }.execute();
     }
+
+
 }

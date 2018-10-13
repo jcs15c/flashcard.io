@@ -25,6 +25,7 @@ import edu.fsu.cs.mobile.testdatabase.Model.Card;
 public class MainActivity extends AppCompatActivity implements CardListAdapter.ItemClickListener {
 
     private CardViewModel mCardViewModel;
+    CardListAdapter adapter;
     public static final int NEW_CARD_ACTIVITY_REQUEST_CODE = 1;
 
     @Override
@@ -46,10 +47,8 @@ public class MainActivity extends AppCompatActivity implements CardListAdapter.I
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         int numberOfColumns = 3;
-        final CardListAdapter adapter = new CardListAdapter(this);
-        adapter.setClickListener(this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
+
+        adapter = new CardListAdapter(this);
 
         mCardViewModel = ViewModelProviders.of(this).get(CardViewModel.class);
         mCardViewModel.getAllCards().observe(this, new Observer<List<Card>>() {
@@ -58,6 +57,13 @@ public class MainActivity extends AppCompatActivity implements CardListAdapter.I
                 adapter.setCards(cards);
             }
         });
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
+
+        adapter.setClickListener(this);
+
+
     }
 
     @Override
@@ -96,8 +102,16 @@ public class MainActivity extends AppCompatActivity implements CardListAdapter.I
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.delete_settings) {
             mCardViewModel.deleteAllCards();
+            return true;
+        }
+
+        if (id == R.id.count_settings) {
+            Toast.makeText(
+                    getApplicationContext(),
+                    Integer.toString(mCardViewModel.countAllCards()),
+                    Toast.LENGTH_LONG).show();
             return true;
         }
 

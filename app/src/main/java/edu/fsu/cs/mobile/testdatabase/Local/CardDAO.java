@@ -30,6 +30,9 @@ public interface CardDAO{
     @Query("SELECT * FROM cards")
     LiveData<List<Card>> getAllCards();
 
+    @Query("SELECT COUNT( * ) FROM cards")
+    int countAllCards();
+
     @Delete
     void deleteCard( Card card );
 

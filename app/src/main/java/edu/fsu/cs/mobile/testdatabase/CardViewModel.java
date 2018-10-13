@@ -28,4 +28,5 @@ public class CardViewModel extends AndroidViewModel {
                            String back) { cardRepository.insertCard( setName, front, back ); }
     public void deleteSet( String setName ) { cardRepository.deleteSet(setName); }
     public void deleteAllCards() { cardRepository.deleteAllCards(); }
+    int countAllCards() { return cardRepository.countAllCards(); }
 }
