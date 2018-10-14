@@ -2,9 +2,9 @@
     <string name="app_name">flashcard.io</string>
     <string name="delete_settings">Delete All Cards</string>
     <string name="count_settings">Count All Cards</string>
-    <string name="hint_set">Set Name…</string>
-    <string name="hint_front">front…</string>
-    <string name="hint_back">back…</string>
-    <string name="button_save">Save</string>
+    <string name="hint_set">Set Name</string>
+    <string name="hint_front">Card Front</string>
+    <string name="hint_back">Card Back</string>
+    <string name="button_save">Add Card</string>
     <string name="empty_not_saved">Card not saved because it is empty.</string>
 </resources>

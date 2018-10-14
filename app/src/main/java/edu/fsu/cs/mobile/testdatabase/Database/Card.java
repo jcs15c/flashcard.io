@@ -1,4 +1,4 @@
-package edu.fsu.cs.mobile.testdatabase.Model;
+package edu.fsu.cs.mobile.testdatabase.Database;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

@@ -5,9 +5,6 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-import edu.fsu.cs.mobile.testdatabase.Local.CardDAO;
-import edu.fsu.cs.mobile.testdatabase.Model.Card;
-
 @Database(entities = {Card.class}, version = 1, exportSchema = false)
 public abstract class CardDatabase extends RoomDatabase {
     public abstract CardDAO cardDAO();

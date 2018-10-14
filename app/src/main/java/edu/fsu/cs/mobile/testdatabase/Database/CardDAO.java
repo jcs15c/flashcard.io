@@ -1,4 +1,4 @@
-package edu.fsu.cs.mobile.testdatabase.Local;
+package edu.fsu.cs.mobile.testdatabase.Database;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -6,11 +6,8 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
-import android.provider.ContactsContract;
 
 import java.util.List;
-
-import edu.fsu.cs.mobile.testdatabase.Model.Card;
 
 @Dao
 public interface CardDAO{

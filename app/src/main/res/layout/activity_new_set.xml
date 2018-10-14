@@ -5,6 +5,18 @@
     android:layout_height="match_parent">
 
     <EditText
+        android:id="@+id/edit_set"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/big_padding"
+        android:layout_marginTop="@dimen/big_padding"
+        android:fontFamily="sans-serif-light"
+        android:hint="@string/hint_set"
+        android:inputType="textAutoComplete"
+        android:padding="@dimen/small_padding"
+        android:textSize="18sp" />
+
+    <EditText
         android:id="@+id/edit_front"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -10,17 +10,14 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import edu.fsu.cs.mobile.testdatabase.Database.Card;
-
-public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHolder> {
+public class SetNameAdapter extends RecyclerView.Adapter<SetNameAdapter.ViewHolder> {
     private final LayoutInflater mInflater;
-    private List<Card> mCards;
+    private List<String> mStrings;
     private ItemClickListener mClickListener;
 
-    CardListAdapter( Context context) {
+    SetNameAdapter( Context context) {
         this.mInflater = LayoutInflater.from(context);
     }
-
 
     @Override
     @NonNull
@@ -31,18 +28,18 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position ) {
-        if( mCards != null ){
-            Card current = mCards.get( position );
-            holder.myTextView.setText(current.getFront());
+        if( mStrings != null ){
+            String current = mStrings.get( position );
+            holder.myTextView.setText(current);
         } else {
-            holder.myTextView.setText("No Cards");
+            holder.myTextView.setText("No Sets!");
         }
     }
 
     @Override
     public int getItemCount() {
-        if (mCards != null)
-            return mCards.size();
+        if (mStrings != null)
+            return mStrings.size();
         else return 0;
     }
 
@@ -70,10 +67,10 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         void onItemClick( View view, int position );
     }
 
-    void setCards(List<Card> cards) {
-        mCards = cards;
+    void setNames(List<String> strings) {
+        mStrings = strings;
         notifyDataSetChanged();
-   }
+    }
 
-   public List<Card> getCards() { return mCards; }
+    public List<String> getNames() { return mStrings; }
 }

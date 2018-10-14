@@ -7,7 +7,7 @@ import android.arch.lifecycle.LiveData;
 import java.util.List;
 
 import edu.fsu.cs.mobile.testdatabase.Database.CardRepository;
-import edu.fsu.cs.mobile.testdatabase.Model.Card;
+import edu.fsu.cs.mobile.testdatabase.Database.Card;
 
 public class CardViewModel extends AndroidViewModel {
     private CardRepository cardRepository;
@@ -21,6 +21,7 @@ public class CardViewModel extends AndroidViewModel {
 
     LiveData<List<Card>> getSet( String setName ) { return cardRepository.getFullSet( setName ); }
     LiveData<List<Card>> getAllCards( ) { return cardRepository.getAllCards(); }
+    LiveData<List<String>> getSetNames( ) { return cardRepository.getSetNames(); }
 
     public void insertCard( Card card ) { cardRepository.insertCard( card ); }
     public void insertCard(String setName,

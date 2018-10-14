@@ -1,16 +1,10 @@
 package edu.fsu.cs.mobile.testdatabase.Database;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
-import android.arch.persistence.room.Room;
-import android.content.Context;
 import android.os.AsyncTask;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-
-import edu.fsu.cs.mobile.testdatabase.Model.Card;
 
 public class CardRepository {
 
