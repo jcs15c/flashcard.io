@@ -17,10 +17,17 @@ import java.util.List;
 
 import edu.fsu.cs.mobile.testdatabase.Database.Card;
 
+// Pretty much identical in form to the MainActivity, but instead of displaying the name of each
+//      set, it instead displays the cards themselves. As such, it uses a similar, but
+//      separately defined adapter.
 public class CardSetActivity extends AppCompatActivity implements CardListAdapter.ItemClickListener {
 
     public static final String EXTRA_REPLY = "com.android.cardlistsql.REPLY";
     public static final int NEW_CARD_ACTIVITY_REQUEST_CODE = 1;
+
+    // This could be a potential memory issue; both this and the main activity each have a
+    //      separate ViewModel. I don't know if this is bad, but if we have memory problems
+    //      down the line, check this first.
     private CardViewModel mCardViewModel;
     CardListAdapter adapter;
 
@@ -37,16 +44,19 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Floating action button goes to the New Card Activity
                 Intent intent = new Intent( CardSetActivity.this, NewCardActivity.class);
                 startActivityForResult(intent, NEW_CARD_ACTIVITY_REQUEST_CODE);
             }
         });
 
+        // Most of this is identical to how it's used in the mainActivity, but with a different adapter.
 
+        // Receive the data from the MainActivity in order to only display cards from one set.
         String info = data.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
         RecyclerView recyclerView = findViewById(R.id.setrecyclerview);
-        int numberOfColumns = 2;
+        int numberOfColumns = 2;   //Two columns instead of 3
         int spacing = Math.round(10 * getResources().getDisplayMetrics().density);
         boolean includeEdge = true;
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(numberOfColumns, spacing, includeEdge));
@@ -65,7 +75,6 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
         recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
 
         adapter.setClickListener(this);
-
     }
 
     public void onActivityResult( int requestCode, int resultCode, Intent data) {
@@ -74,6 +83,8 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
         String setName = inputData.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
         if( requestCode == NEW_CARD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK ) {
+            // Since NewCard activity now only asks for the front and back, use the
+            //      setName from MainActivity's intent
             String[] info = data.getStringArrayExtra(NewCardActivity.EXTRA_REPLY);
             Card card = new Card(setName, info[0], info[1]);
             mCardViewModel.insertCard(card);
@@ -86,6 +97,11 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
         }
     }
 
+
+    // This is probably very bad practice, kinda defeating the point of the adapter in the first place.
+    //      Should really be changed so that the adapter handles this function.
+    //      Probably still pretty inefficient, even without this concern.
+    //  In practice, all it does is "flip" the flashcard.
     @Override
     public void onItemClick(View view, int position ) {
         RecyclerView recyclerView = findViewById(R.id.setrecyclerview);

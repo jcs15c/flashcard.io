@@ -4,6 +4,7 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+// Some random code I found online to evenly space the items in the gridView.
 public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
     private int spanCount;
     private int spacing;

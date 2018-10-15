@@ -12,6 +12,8 @@ import java.util.List;
 
 import edu.fsu.cs.mobile.testdatabase.Database.Card;
 
+// The adapter that makes the RecyclerView "easier" to handle. Much of this is beyond what I
+//      understand, particularly the part with inflaters.
 public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHolder> {
     private final LayoutInflater mInflater;
     private List<Card> mCards;
@@ -20,7 +22,6 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
     CardListAdapter( Context context) {
         this.mInflater = LayoutInflater.from(context);
     }
-
 
     @Override
     @NonNull
@@ -33,6 +34,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position ) {
         if( mCards != null ){
             Card current = mCards.get( position );
+            // Each textView in each square displays the front of the card its associated with
             holder.myTextView.setText(current.getFront());
         } else {
             holder.myTextView.setText("No Cards");
@@ -75,5 +77,8 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         notifyDataSetChanged();
    }
 
+   // This function may be bad practice, but I don't know enough one way or another.
+   // We should probably change this so that there's a single function 'flipCard' that
+   //       makes the adapter responsible for changing the text on the grid, not the activity.
    public List<Card> getCards() { return mCards; }
 }

@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+// Pretty much the same as the CardListAdapter, but handles a List of Strings rather than
+//      a list of Cards.
 public class SetNameAdapter extends RecyclerView.Adapter<SetNameAdapter.ViewHolder> {
     private final LayoutInflater mInflater;
     private List<String> mStrings;
@@ -72,5 +74,5 @@ public class SetNameAdapter extends RecyclerView.Adapter<SetNameAdapter.ViewHold
         notifyDataSetChanged();
     }
 
-    public List<String> getNames() { return mStrings; }
+    public String getNameFromPosition(int pos) { return mStrings.get(pos); }
 }

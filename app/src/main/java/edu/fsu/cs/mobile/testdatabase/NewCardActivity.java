@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+// Activity to add a user-inputted card to the database
 public class NewCardActivity extends AppCompatActivity {
     public static final String EXTRA_REPLY = "com.android.cardlistsql.REPLY";
 
@@ -34,6 +35,7 @@ public class NewCardActivity extends AppCompatActivity {
                     replyIntent.putExtra(EXTRA_REPLY, info);
                     setResult(RESULT_OK, replyIntent);
                 }
+                // Don't know what finish() does. Sorry.
                 finish();
             }
         });

@@ -8,6 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+// This actually needs some changing. The way it's set up right now, the only way to input a
+//      set of cards is by adding a card to it. Ideally, it should be allowable for a set to exist
+//      while not having any card in it. One way to fix this is by maybe letting each set have
+//      a card object with "null" as the front and back, and take care to not display it?
 public class NewSetActivity extends AppCompatActivity {
     public static final String EXTRA_REPLY = "com.android.cardlistsql.REPLY";
 
