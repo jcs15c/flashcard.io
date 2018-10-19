@@ -16,6 +16,7 @@ public class NewCardActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_card);
         mEditFront = findViewById(R.id.edit_front);
