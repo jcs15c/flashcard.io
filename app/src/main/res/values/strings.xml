@@ -6,5 +6,7 @@
     <string name="hint_front">Card Front</string>
     <string name="hint_back">Card Back</string>
     <string name="button_save">Add Card</string>
-    <string name="empty_not_saved">Card not saved because it is empty.</string>
+    <string name="empty_not_saved">Card cannot be empty</string>
+    <string name="add_demo_cards">Add Demo Cards</string>
+    <string name="delete_cards">Delete Cards</string>
 </resources>

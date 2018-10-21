@@ -9,6 +9,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +26,10 @@ import edu.fsu.cs.mobile.testdatabase.Database.Card;
 public class CardSetActivity extends AppCompatActivity implements CardListAdapter.ItemClickListener {
 
     public static final String EXTRA_REPLY = "com.android.cardlistsql.REPLY";
+    public static final String EXTRA_DELETE = "com.android.cardlistsql.DELETE";
     public static final int NEW_CARD_ACTIVITY_REQUEST_CODE = 1;
+    public static final int DELETE_CARDS_ACTIVITY_REQUEST_CODE = 1;
+
 
     // This could be a potential memory issue; both this and the main activity each have a
     //      separate ViewModel. I don't know if this is bad, but if we have memory problems
@@ -34,11 +40,17 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent data = getIntent();
         setContentView(R.layout.activity_card_set);
 
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        // Receive the data from the MainActivity in order to only display cards from one set.
+        Intent data = getIntent();
+        String info = data.getStringExtra(MainActivity.EXTRA_MESSAGE);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if( info != null )
+            getSupportActionBar().setTitle( info );
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -50,11 +62,8 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
             }
         });
 
+
         // Most of this is identical to how it's used in the mainActivity, but with a different adapter.
-
-        // Receive the data from the MainActivity in order to only display cards from one set.
-        String info = data.getStringExtra(MainActivity.EXTRA_MESSAGE);
-
         RecyclerView recyclerView = findViewById(R.id.setrecyclerview);
         int numberOfColumns = 2;   //Two columns instead of 3
         int spacing = Math.round(10 * getResources().getDisplayMetrics().density);
@@ -97,7 +106,6 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
         }
     }
 
-
     // This is probably very bad practice, kinda defeating the point of the adapter in the first place.
     //      Should really be changed so that the adapter handles this function.
     //      Probably still pretty inefficient, even without this concern.
@@ -116,4 +124,30 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
         else
             textView.setText(currentFront);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        // Don't know exactly how this works, but each one of these 'if' blocks corresponds
+        //      to a single action in the menu.
+        if (id == R.id.delete_cards) {
+            //TODO: fix return error on deleteCards
+            Intent data = getIntent();
+            Intent deleteIntent = new Intent(CardSetActivity.this, DeleteCardsActivity.class);
+            deleteIntent.putExtra( EXTRA_DELETE, data.getStringExtra(MainActivity.EXTRA_MESSAGE) );
+            startActivityForResult( deleteIntent, DELETE_CARDS_ACTIVITY_REQUEST_CODE );
+            overridePendingTransition(0,0); // To skip animation
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_card_set, menu);
+        return true;
+    }
+
 }

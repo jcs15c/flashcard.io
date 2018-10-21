@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,8 +27,9 @@ public class NewCardActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent replyIntent = new Intent();
-                if (TextUtils.isEmpty(mEditFront.getText()) ||
-                    TextUtils.isEmpty(mEditBack.getText())) {
+                // disallows card with only whitespace
+                if ( mEditFront.getText().toString().trim().length() == 0 ||
+                      mEditBack.getText().toString().trim().length() == 0) {
                     setResult( RESULT_CANCELED, replyIntent );
                 } else {
                     String[] info = {mEditFront.getText().toString(),

@@ -6,20 +6,23 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.util.UUID;
+
 /*
 Object class that defines what a "Card" is, both in terms of the Java object
 and the Room entity. For Room, each Card represents a single row in the database.
 */
 
 // In this configuration, there is a single table "cards" populated by all cards from all sets.
-@Entity( tableName = "cards")
+@Entity( tableName = "cards" )
 public class Card{
     /*
     Usually a hidden value, necessary to allow for 2 otherwise identical cards
     to exist in the database simultaneously.
     */
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+    @NonNull
+    @PrimaryKey//(autoGenerate = true)
+    private String id;
 
     /*
     Each @ColumnInfo annotation defines a single column of the "cards" table,
@@ -44,14 +47,15 @@ public class Card{
         this.setName = setName;
         this.front = front;
         this.back = back;
+        this.id = UUID.randomUUID().toString();
     }
 
     // Establish the getters and setters for each of the member variables of Card
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

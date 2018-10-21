@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 
 import java.util.List;
+import java.util.UUID;
 
 import edu.fsu.cs.mobile.testdatabase.Database.CardRepository;
 import edu.fsu.cs.mobile.testdatabase.Database.Card;
@@ -33,11 +34,17 @@ public class CardViewModel extends AndroidViewModel {
     LiveData<List<Card>> getAllCards( ) { return cardRepository.getAllCards(); }
     LiveData<List<String>> getSetNames( ) { return cardRepository.getSetNames(); }
 
+    public void insertSet( String setName ) { cardRepository.insertSet(setName); }
     public void insertCard( Card card ) { cardRepository.insertCard( card ); }
     public void insertCard(String setName,
                            String front,
                            String back) { cardRepository.insertCard( setName, front, back ); }
     public void deleteSet( String setName ) { cardRepository.deleteSet(setName); }
     public void deleteAllCards() { cardRepository.deleteAllCards(); }
+    //public void deleteCards(Card... cards) { cardRepository.deleteCards(cards); }
     int countAllCards() { return cardRepository.countAllCards(); }
+    public void deleteCard( String id ) { cardRepository.deleteCard(id); }
+    public void deleteCard(Card card) { cardRepository.deleteCard(card); }
+    int countCardSet(String setName) { return cardRepository.countCardSet(setName); }
+
 }

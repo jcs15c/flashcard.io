@@ -8,7 +8,7 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
 import java.util.List;
-
+import java.util.UUID;
 /*
 The Data Access Object provides the interface between SQL commands and Java functions.
 The annotations describe the kind of SQL operation and its definition, while
@@ -23,14 +23,16 @@ public interface CardDAO{
     This and most other values are returned as LiveData wrapped values so that
     they can be observed in each activity.
     */
-    @Query("SELECT * FROM cards WHERE setName=:setName")
+
+    // Only return non-dummy cards
+    @Query("SELECT * FROM cards WHERE setName=:setName AND front != '' AND back != '' ")
     LiveData<List<Card>> getFullSet(String setName);
 
     @Query("SELECT DISTINCT setName FROM cards")
     LiveData<List<String>> getSetNames();
 
     @Query("SELECT * FROM cards WHERE id=:id")
-    LiveData<Card> getCard(int id);
+    Card getCard(String id);
 
     @Query("SELECT * FROM cards")
     LiveData<List<Card>> getAllCards();
@@ -39,8 +41,21 @@ public interface CardDAO{
     @Query("SELECT COUNT( * ) FROM cards")
     int countAllCards();
 
+    @Query("SELECT COUNT( * ) FROM cards WHERE setName=:setName")
+    int countCardSet(String setName);
+
+    // Use a card with empty string as the front and back as the dummy card per set
+    @Query("SELECT COUNT( * ) FROM cards WHERE setName=:setName AND front='' AND back=''")
+    int setExists(String setName);
+
     @Delete
     void deleteCard( Card card );
+
+    @Delete
+    void deleteCards( Card... card );
+
+    //@Query("DELETE FROM cards WHERE setName=:setName AND front=:front AND back=:back")
+    //void deleteCard( String setName, String front, String back);
 
     @Query("DELETE FROM cards WHERE setName=:setName")
     void deleteSet(String setName);
