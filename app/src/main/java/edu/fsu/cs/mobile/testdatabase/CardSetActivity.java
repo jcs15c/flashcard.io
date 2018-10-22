@@ -98,7 +98,7 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
             Card card = new Card(setName, info[0], info[1]);
             mCardViewModel.insertCard(card);
         }
-        else {
+        else if( requestCode == NEW_CARD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_CANCELED ){
             Toast.makeText(
                     getApplicationContext(),
                     R.string.empty_not_saved,
@@ -136,7 +136,7 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
             Intent data = getIntent();
             Intent deleteIntent = new Intent(CardSetActivity.this, DeleteCardsActivity.class);
             deleteIntent.putExtra( EXTRA_DELETE, data.getStringExtra(MainActivity.EXTRA_MESSAGE) );
-            startActivityForResult( deleteIntent, DELETE_CARDS_ACTIVITY_REQUEST_CODE );
+            startActivity( deleteIntent );
             overridePendingTransition(0,0); // To skip animation
             return true;
         }

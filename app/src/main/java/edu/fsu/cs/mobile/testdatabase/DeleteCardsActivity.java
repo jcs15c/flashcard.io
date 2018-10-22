@@ -27,6 +27,7 @@ public class DeleteCardsActivity extends AppCompatActivity implements CardListAd
     CardViewModel mCardViewModel;
     CardListAdapter adapter;
     SortedSet<Integer> delete_positions = new TreeSet<Integer>();
+    public static final int DELETE_CARDS_ACTIVITY_RESULT_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +51,12 @@ public class DeleteCardsActivity extends AppCompatActivity implements CardListAd
                 List<Card> mCards = adapter.getCards();
                 for( int i = pos_array.length; i > 0; i--){
                     mCardViewModel.deleteCard( mCards.get(pos_array[i-1]).getId() );
-                    resetColor(i);
                 }
+                for( int i = 0; i < mCards.size(); i++ )
+                    resetColor(i);
                 delete_positions.clear();
+                setResult(RESULT_OK);  //May or May not do anything
+                finish();
             }
         });
 
