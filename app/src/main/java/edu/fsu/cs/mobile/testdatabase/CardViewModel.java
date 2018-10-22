@@ -3,6 +3,7 @@ package edu.fsu.cs.mobile.testdatabase;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.util.Log;
 
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +32,8 @@ public class CardViewModel extends AndroidViewModel {
 
     // These methods can be called from the Activity, and do what they say they do.
     LiveData<List<Card>> getSet( String setName ) { return cardRepository.getFullSet( setName ); }
+    List<Card> getStaticSet( String setName ) { return cardRepository.getStaticFullSet( setName ); }
+
     LiveData<List<Card>> getAllCards( ) { return cardRepository.getAllCards(); }
     LiveData<List<String>> getSetNames( ) { return cardRepository.getSetNames(); }
 

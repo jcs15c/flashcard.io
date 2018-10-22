@@ -9,4 +9,5 @@
     <string name="empty_not_saved">Card cannot be empty</string>
     <string name="add_demo_cards">Add Demo Cards</string>
     <string name="delete_cards">Delete Cards</string>
+    <string name="start_review">Start Review?</string>
 </resources>

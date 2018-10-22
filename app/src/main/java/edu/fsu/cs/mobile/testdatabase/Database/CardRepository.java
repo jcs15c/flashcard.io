@@ -82,6 +82,11 @@ public class CardRepository {
         return cardDatabase.cardDAO().getFullSet(setName);
     }
 
+    // Get non-observable list of cards, which is necessary for the reviewGame logic (probably)
+    public List<Card> getStaticFullSet(String setName) {
+        return cardDatabase.cardDAO().getFullSet(setName).getValue();
+    }
+
     public int countAllCards() {
         try {
             return new AsyncTask<Void, Void, Integer>() {

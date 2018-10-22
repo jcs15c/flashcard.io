@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,7 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
 
     public static final String EXTRA_REPLY = "com.android.cardlistsql.REPLY";
     public static final String EXTRA_DELETE = "com.android.cardlistsql.DELETE";
+    public static final String EXTRA_REVIEW = "com.android.cardlistsql.REVIEW";
     public static final int NEW_CARD_ACTIVITY_REQUEST_CODE = 1;
     public static final int DELETE_CARDS_ACTIVITY_REQUEST_CODE = 1;
 
@@ -128,16 +130,23 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        Intent data = getIntent();
 
         // Don't know exactly how this works, but each one of these 'if' blocks corresponds
         //      to a single action in the menu.
         if (id == R.id.delete_cards) {
-            //TODO: fix return error on deleteCards
-            Intent data = getIntent();
+            //TODO: fix return error on deleteCards. Also seems kinda buggy if there are too many cards
             Intent deleteIntent = new Intent(CardSetActivity.this, DeleteCardsActivity.class);
             deleteIntent.putExtra( EXTRA_DELETE, data.getStringExtra(MainActivity.EXTRA_MESSAGE) );
             startActivity( deleteIntent );
             overridePendingTransition(0,0); // To skip animation
+            return true;
+        }
+
+        if (id == R.id.review_game) {
+            Intent reviewIntent = new Intent(CardSetActivity.this, ReviewGameActivity.class);
+            reviewIntent.putExtra( EXTRA_REVIEW, data.getStringExtra(MainActivity.EXTRA_MESSAGE) );
+            startActivity( reviewIntent );
             return true;
         }
 
