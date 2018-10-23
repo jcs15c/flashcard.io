@@ -52,8 +52,6 @@ public class DeleteCardsActivity extends AppCompatActivity implements CardListAd
                 for( int i = pos_array.length; i > 0; i--){
                     mCardViewModel.deleteCard( mCards.get(pos_array[i-1]).getId() );
                 }
-                for( int i = 0; i < mCards.size(); i++ )
-                    resetColor(i);
                 delete_positions.clear();
                 setResult(RESULT_OK);  //May or May not do anything
                 finish();
@@ -99,14 +97,16 @@ public class DeleteCardsActivity extends AppCompatActivity implements CardListAd
 
     }
 
-    //TODO: Make this not have to exist. it is slow and makes me sad.
+    //We actually don't need this if we go back to the previous activity after this one. it resets.
+    //  The bug is still present, and i dont know why it happened, but we can ignore it for now.
+    /*
     private void resetColor( int pos ){
         RecyclerView recyclerView = findViewById(R.id.delete_setrecyclerview);
         RecyclerView.ViewHolder holder = recyclerView.findViewHolderForAdapterPosition(pos);
         TextView textView = holder.itemView.findViewById(R.id.card_grid_item);
         textView.setBackgroundColor(Color.parseColor("#C6C6C6"));
     }
-
+    */
 
     // To skip slide animation when backing out of activity
     @Override
