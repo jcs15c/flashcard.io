@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
         // This adapter connects the recyclerView to the room database to display the set names
         adapter = new SetNameAdapter(this);
 
-        // This statement is important, but I don't really know why.
+        // This statement is (update: REALLY) important, but I don't really know why.
         mCardViewModel = ViewModelProviders.of(this).get(CardViewModel.class);
         // Setup an observer on the setNames LiveData object, changing the display if it does.
         mCardViewModel.getSetNames().observe(this, new Observer<List<String>>() {
@@ -99,17 +100,19 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
 
         if( requestCode == NEW_SET_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK ) {
             // If we come from the NewSetActivity, we need to add a new card. Needs fixing
-            String[] info = data.getStringArrayExtra(NewCardActivity.EXTRA_REPLY);
-            Card card = new Card(info[0], info[1], info[2]);
-            mCardViewModel.insertCard(card);
+            String setName = data.getStringExtra(NewCardActivity.EXTRA_REPLY);
+            mCardViewModel.insertSet(setName);
         }
-        else if( requestCode == CARD_SET_ACTIVITY_REQUEST_CODE ) {}
-        else {
+        else if( requestCode == NEW_SET_ACTIVITY_REQUEST_CODE && resultCode == RESULT_CANCELED)
+        {
+            //TODO: Still some inconsistent behavior when pressing back to leave an activity.
             Toast.makeText(
                     getApplicationContext(),
-                    "Set must have at least one card",
+                    R.string.empty_not_saved,
                     Toast.LENGTH_LONG).show();
         }
+        else {}
+
     }
 
 
@@ -125,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
 
         // Don't know exactly how this works, but each one of these 'if' blocks corresponds
         //      to a single action in the menu.
-        if (id == R.id.delete_settings) {
+        if (id == R.id.delete_all_cards) {
             mCardViewModel.deleteAllCards();
             return true;
         }
@@ -138,6 +141,31 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
             return true;
         }
 
+        if (id == R.id.add_demo_cards) {
+            addTestData();
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    private void addTestData() {
+        mCardViewModel.insertCard(new Card("Animal Sounds", "", ""));
+        mCardViewModel.insertCard(new Card("Animal Sounds", "Cat", "Meow"));
+        mCardViewModel.insertCard(new Card("Animal Sounds", "Dog", "Woof"));
+        mCardViewModel.insertCard(new Card("Animal Sounds", "Cow", "Moo"));
+        mCardViewModel.insertCard(new Card("Animal Sounds", "Sheep", "Baa"));
+
+        mCardViewModel.insertCard(new Card("Flowers", "", ""));
+        mCardViewModel.insertCard(new Card("Flowers", "Daisy", "White"));
+        mCardViewModel.insertCard(new Card("Flowers", "Rose", "Red"));
+        mCardViewModel.insertCard(new Card("Flowers", "Violet", "Purple"));
+
+        mCardViewModel.insertCard(new Card("Milk Kinds", "", ""));
+        mCardViewModel.insertCard(new Card("Milk Kinds", "Whole", "Gross"));
+        mCardViewModel.insertCard(new Card("Milk Kinds", "Chocolate", "Yum Yum"));
+        mCardViewModel.insertCard(new Card("Milk Kinds", "Skim", "Please no"));
+        mCardViewModel.insertCard(new Card("Milk Kinds", "Almond", "Not a cow"));
+        mCardViewModel.insertCard(new Card("Milk Kinds", "Half", "Not real Milk"));
     }
 }
