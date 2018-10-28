@@ -15,12 +15,6 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/notification_settings"
-        android:orderInCategory="100"
-        android:title="@string/notification_settings"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/add_demo_cards"
         android:orderInCategory="100"
         android:title="@string/add_demo_cards"

@@ -16,7 +16,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".BroadcastReceiver.AlarmReceiver"/>
         <activity android:name=".CardSetActivity" />
         <activity android:name=".NewCardActivity" />
         <activity android:name=".NewSetActivity" />

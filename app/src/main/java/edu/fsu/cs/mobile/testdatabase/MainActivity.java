@@ -1,7 +1,5 @@
 package edu.fsu.cs.mobile.testdatabase;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -18,11 +16,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.util.Calendar;
 import java.util.List;
 
 import edu.fsu.cs.mobile.testdatabase.Database.Card;
-import edu.fsu.cs.mobile.testdatabase.BroadcastReceiver.AlarmReceiver;
 
 // I've read that making the MainActivity implement the adapter is bad, but here we go
 public class MainActivity extends AppCompatActivity implements SetNameAdapter.ItemClickListener {
@@ -47,8 +43,6 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        registerAlarm();
-        
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,19 +82,6 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
 
         // Adapter has within it the logic to manage the onClickListener of each grid square
         adapter.setClickListener(this);
-    }
-
-    private void registerAlarm() {
-        Calendar mCalendar =  Calendar.getInstance();
-        mCalendar.set(Calendar.HOUR_OF_DAY, 12);
-        mCalendar.set(Calendar.MINUTE, 0);
-        mCalendar.set(Calendar.SECOND, 0);
-
-        Intent mIntent = new Intent(MainActivity.this, AlarmReceiver.class);
-        PendingIntent mPendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, mIntent, PendingIntent.FLAG_IMMUTABLE );
-        AlarmManager mAlarmManager = (AlarmManager)this.getSystemService(this.ALARM_SERVICE);
-        mAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP, mCalendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY, mPendingIntent);
-
     }
 
     @Override
@@ -158,10 +139,6 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
                     Integer.toString(mCardViewModel.countAllCards()),
                     Toast.LENGTH_LONG).show();
             return true;
-        }
-
-        if (id == R.id.notification_settings){
-            Toast.makeText(getApplicationContext(),"Support to be added.", Toast.LENGTH_LONG).show();
         }
 
         if (id == R.id.add_demo_cards) {
