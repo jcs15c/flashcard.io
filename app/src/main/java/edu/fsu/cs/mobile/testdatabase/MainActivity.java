@@ -3,8 +3,10 @@ package edu.fsu.cs.mobile.testdatabase;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,6 +16,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -34,11 +39,32 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
     public static final int CARD_SET_ACTIVITY_REQUEST_CODE = 2;
     public static final String EXTRA_MESSAGE = "edu.fsu.cs.mobile.testdatabase.MESSAGE";
 
+    private int prevPosition ;
+    private String selectedSet;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Reset menu selection
+        adapter.refreshView();
+        prevPosition = -1;
+
+        // Make menu options inaccessible, and menu hint visible
+        findViewById(R.id.text_hint).setVisibility(View.VISIBLE);
+        findViewById(R.id.submenu_table).setVisibility(View.INVISIBLE);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        RelativeLayout subMenu = findViewById(R.id.subMenu);
+        getLayoutInflater().inflate(R.layout.text_hint, subMenu, true);
+        getLayoutInflater().inflate(R.layout.submenu_options, subMenu, true);
+        setupSubmenuButtons(); //Only initialize buttons after they're added to layou
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -54,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
         });
 
         // Display uses a recyclerView to better interact with the LiveData returned by Room
-        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+        RecyclerView recyclerView = findViewById(R.id.set_name_recyclerview);
 
         // The Decoration is something I found online to make the grid look more evenly spaced.
         int numberOfColumns = 3;
@@ -84,13 +110,39 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
         adapter.setClickListener(this);
     }
 
+    private void setupSubmenuButtons() {
+        Button submenu_explore = (Button) findViewById(R.id.submenu_explore);
+        submenu_explore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent( MainActivity.this, CardSetActivity.class);
+                intent.putExtra(EXTRA_MESSAGE, selectedSet);
+                startActivityForResult(intent, CARD_SET_ACTIVITY_REQUEST_CODE);            }
+        });
+
+    }
     @Override
     public void onItemClick(View view, int position ) {
         // When an item is clicked, its position in the List<String> is known, which
         //      is used to pass the right data into the next activity
-        Intent intent = new Intent( MainActivity.this, CardSetActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, adapter.getNameFromPosition(position));
-        startActivityForResult(intent, CARD_SET_ACTIVITY_REQUEST_CODE);
+        findViewById(R.id.text_hint).setVisibility(View.INVISIBLE);
+        findViewById(R.id.submenu_table).setVisibility(View.VISIBLE);
+
+        RecyclerView recyclerView = findViewById(R.id.set_name_recyclerview);
+
+        if ( prevPosition != -1 ) {
+            RecyclerView.ViewHolder prevHolder = recyclerView.findViewHolderForAdapterPosition(prevPosition);
+            TextView prevView = prevHolder.itemView.findViewById(R.id.card_grid_item);
+            prevView.setBackgroundColor(Color.parseColor("#C6C6C6"));
+        }
+
+        RecyclerView.ViewHolder holder = recyclerView.findViewHolderForAdapterPosition(position);
+        TextView pressedView = holder.itemView.findViewById(R.id.card_grid_item);
+        pressedView.setBackgroundColor(Color.parseColor("#99d9e9"));
+
+        selectedSet = pressedView.getText().toString();
+        prevPosition = position;
+
     }
 
     // This is definitely written poorly, I wasn't sure how to do the error checking
@@ -112,7 +164,6 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
                     Toast.LENGTH_LONG).show();
         }
         else {}
-
     }
 
 

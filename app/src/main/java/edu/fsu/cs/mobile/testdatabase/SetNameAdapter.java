@@ -75,4 +75,6 @@ public class SetNameAdapter extends RecyclerView.Adapter<SetNameAdapter.ViewHold
     }
 
     public String getNameFromPosition(int pos) { return mStrings.get(pos); }
+
+    public void refreshView() { notifyDataSetChanged(); }
 }
