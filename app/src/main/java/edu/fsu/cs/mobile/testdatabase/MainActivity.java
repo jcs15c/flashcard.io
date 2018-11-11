@@ -128,6 +128,8 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
         Button submenu_explore = (Button) findViewById(R.id.submenu_explore);
         Button submenu_review = (Button) findViewById(R.id.submenu_review);
         Button submenu_rename = (Button) findViewById(R.id.submenu_rename);
+        Button submenu_delete = (Button) findViewById(R.id.submenu_delete);
+        Button submenu_clone = (Button) findViewById(R.id.submenu_clone);
 
         submenu_explore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,8 +150,6 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
         submenu_rename.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("Rename " + selectedSet + "?");
                 View viewInflated = LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_rename_set,
@@ -179,6 +179,46 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
                 });
                 builder.show();
 
+            }
+        });
+
+        submenu_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Are you sure you want to delete " + selectedSet + "?");
+
+                builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        mCardViewModel.deleteSet( selectedSet );
+                        refreshRecyclerView();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        refreshRecyclerView();
+                    }
+                });
+                builder.show();
+            }
+        });
+
+        submenu_clone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<Card> new_cards = mCardViewModel.getStaticSet( selectedSet );
+                Log.d("LOOP", String.valueOf(new_cards.size()));
+                selectedSet += " - Copy";
+                mCardViewModel.insertSet(selectedSet);
+                for( Card C : new_cards ) {
+                    Log.d("LOOP", "EEK" );
+                    mCardViewModel.insertCard(new Card(selectedSet, C.getFront(), C.getBack()));
+                }
+                refreshRecyclerView();
             }
         });
     }

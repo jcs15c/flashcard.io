@@ -28,7 +28,10 @@ public interface CardDAO{
     @Query("SELECT * FROM cards WHERE setName=:setName AND front != '' AND back != '' ")
     LiveData<List<Card>> getSetCards(String setName);
 
-     @Query("SELECT DISTINCT setName FROM cards")
+    @Query("SELECT * FROM cards WHERE setName=:setName AND front != '' AND back != '' ")
+    List<Card> getStaticSet(String setName);
+
+    @Query("SELECT DISTINCT setName FROM cards")
     LiveData<List<String>> getSetNames();
 
     @Query("SELECT * FROM cards WHERE id=:id")

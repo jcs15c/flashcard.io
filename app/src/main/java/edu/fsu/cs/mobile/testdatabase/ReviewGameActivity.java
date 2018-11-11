@@ -25,5 +25,7 @@ public class ReviewGameActivity extends AppCompatActivity {
         String setName = data.getStringExtra(MainActivity.EXTRA_REVIEW);
         review_cards = mCardViewModel.getStaticSet( setName );
 
+
+
     }
 }
