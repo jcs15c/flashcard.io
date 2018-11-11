@@ -22,7 +22,7 @@ public class ReviewGameActivity extends AppCompatActivity {
         // For the rest of the activity, only use the cards at the time of the activity's creation.
         mCardViewModel = ViewModelProviders.of(this).get(CardViewModel.class);
         Intent data = getIntent();
-        String setName = data.getStringExtra(CardSetActivity.EXTRA_REVIEW);
+        String setName = data.getStringExtra(MainActivity.EXTRA_REVIEW);
         review_cards = mCardViewModel.getStaticSet( setName );
 
     }

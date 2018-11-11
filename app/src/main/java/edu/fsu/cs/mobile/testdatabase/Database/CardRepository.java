@@ -78,13 +78,13 @@ public class CardRepository {
     }
 
     public LiveData<List<Card>> getAllCards() { return cardDatabase.cardDAO().getAllCards(); }
-    public LiveData<List<Card>> getFullSet(String setName) {
-        return cardDatabase.cardDAO().getFullSet(setName);
+    public LiveData<List<Card>> getSetCards(String setName) {
+        return cardDatabase.cardDAO().getSetCards(setName);
     }
 
     // Get non-observable list of cards, which is necessary for the reviewGame logic (probably)
     public List<Card> getStaticFullSet(String setName) {
-        return cardDatabase.cardDAO().getFullSet(setName).getValue();
+        return cardDatabase.cardDAO().getSetCards(setName).getValue();
     }
 
     public int countAllCards() {
@@ -180,6 +180,26 @@ public class CardRepository {
             @Override
             protected Void doInBackground(Void... voids) {
                 cardDatabase.cardDAO().updateCard(card);
+                return null;
+            }
+        }.execute();
+    }
+
+    public void updateCards(final Card... cards) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                cardDatabase.cardDAO().updateCards(cards);
+                return null;
+            }
+        }.execute();
+    }
+
+    public void renameSet(final String oldSetName, final String newSetName) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                cardDatabase.cardDAO().renameSet(oldSetName, newSetName);
                 return null;
             }
         }.execute();

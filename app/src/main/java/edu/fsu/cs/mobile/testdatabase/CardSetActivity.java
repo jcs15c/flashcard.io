@@ -28,7 +28,6 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
 
     public static final String EXTRA_REPLY = "com.android.cardlistsql.REPLY";
     public static final String EXTRA_DELETE = "com.android.cardlistsql.DELETE";
-    public static final String EXTRA_REVIEW = "com.android.cardlistsql.REVIEW";
     public static final int NEW_CARD_ACTIVITY_REQUEST_CODE = 1;
     public static final int DELETE_CARDS_ACTIVITY_REQUEST_CODE = 1;
 
@@ -67,7 +66,7 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
 
         // Most of this is identical to how it's used in the mainActivity, but with a different adapter.
         RecyclerView recyclerView = findViewById(R.id.setrecyclerview);
-        int numberOfColumns = 2;   //Two columns instead of 3
+        int numberOfColumns = 1;   //Two columns instead of 3
         int spacing = Math.round(10 * getResources().getDisplayMetrics().density);
         boolean includeEdge = true;
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(numberOfColumns, spacing, includeEdge));
@@ -75,7 +74,7 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
         adapter = new CardListAdapter(this);
 
         mCardViewModel = ViewModelProviders.of(this).get(CardViewModel.class);
-        mCardViewModel.getSet(info).observe(this, new Observer<List<Card>>() {
+        mCardViewModel.getSetCards(info).observe(this, new Observer<List<Card>>() {
             @Override
             public void onChanged(@Nullable final List<Card> cards) {
                 adapter.setCards(cards);
@@ -140,13 +139,6 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
             deleteIntent.putExtra( EXTRA_DELETE, data.getStringExtra(MainActivity.EXTRA_MESSAGE) );
             startActivity( deleteIntent );
             overridePendingTransition(0,0); // To skip animation
-            return true;
-        }
-
-        if (id == R.id.review_game) {
-            Intent reviewIntent = new Intent(CardSetActivity.this, ReviewGameActivity.class);
-            reviewIntent.putExtra( EXTRA_REVIEW, data.getStringExtra(MainActivity.EXTRA_MESSAGE) );
-            startActivity( reviewIntent );
             return true;
         }
 

@@ -3,6 +3,7 @@ package edu.fsu.cs.mobile.testdatabase;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,7 @@ public class SetNameAdapter extends RecyclerView.Adapter<SetNameAdapter.ViewHold
     @Override
     @NonNull
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.card_grid_item, parent, false);
+        View view = mInflater.inflate(R.layout.set_grid_item, parent, false);
         return new ViewHolder( view );
     }
 
@@ -50,7 +51,7 @@ public class SetNameAdapter extends RecyclerView.Adapter<SetNameAdapter.ViewHold
 
         ViewHolder( View itemView ) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.card_grid_item);
+            myTextView = itemView.findViewById(R.id.set_grid_item);
             itemView.setOnClickListener(this);
         }
 

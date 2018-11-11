@@ -68,7 +68,7 @@ public class DeleteCardsActivity extends AppCompatActivity implements CardListAd
         adapter = new CardListAdapter(this);
 
         mCardViewModel = ViewModelProviders.of(this).get(CardViewModel.class);
-        mCardViewModel.getSet(info).observe(this, new Observer<List<Card>>() {
+        mCardViewModel.getSetCards(info).observe(this, new Observer<List<Card>>() {
             @Override
             public void onChanged(@Nullable final List<Card> cards) {
                 adapter.setCards(cards);

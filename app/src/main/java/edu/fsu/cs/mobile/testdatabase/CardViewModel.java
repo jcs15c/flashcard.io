@@ -31,12 +31,13 @@ public class CardViewModel extends AndroidViewModel {
     }
 
     // These methods can be called from the Activity, and do what they say they do.
-    LiveData<List<Card>> getSet( String setName ) { return cardRepository.getFullSet( setName ); }
+    LiveData<List<Card>> getSetCards( String setName ) { return cardRepository.getSetCards( setName ); }
     List<Card> getStaticSet( String setName ) { return cardRepository.getStaticFullSet( setName ); }
 
     LiveData<List<Card>> getAllCards( ) { return cardRepository.getAllCards(); }
     LiveData<List<String>> getSetNames( ) { return cardRepository.getSetNames(); }
 
+    public void renameSet( String oldSetName, String newSetName ) { cardRepository.renameSet(oldSetName, newSetName); }
     public void insertSet( String setName ) { cardRepository.insertSet(setName); }
     public void insertCard( Card card ) { cardRepository.insertCard( card ); }
     public void insertCard(String setName,
@@ -50,4 +51,5 @@ public class CardViewModel extends AndroidViewModel {
     public void deleteCard(Card card) { cardRepository.deleteCard(card); }
     int countCardSet(String setName) { return cardRepository.countCardSet(setName); }
 
+    public void updateCards( Card... cards) { cardRepository.updateCards(cards); }
 }

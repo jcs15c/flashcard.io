@@ -26,9 +26,9 @@ public interface CardDAO{
 
     // Only return non-dummy cards
     @Query("SELECT * FROM cards WHERE setName=:setName AND front != '' AND back != '' ")
-    LiveData<List<Card>> getFullSet(String setName);
+    LiveData<List<Card>> getSetCards(String setName);
 
-    @Query("SELECT DISTINCT setName FROM cards")
+     @Query("SELECT DISTINCT setName FROM cards")
     LiveData<List<String>> getSetNames();
 
     @Query("SELECT * FROM cards WHERE id=:id")
@@ -65,4 +65,13 @@ public interface CardDAO{
 
     @Update
     void updateCard( Card card );
+
+    // Change setName column of cards
+    @Query("UPDATE cards SET setName=:newSetName WHERE setName=:oldSetName")
+    void renameSet(String oldSetName, String newSetName);
+
+    @Update
+    void updateCards( Card... cards );
+
+
 }
