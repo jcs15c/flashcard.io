@@ -8,6 +8,9 @@
         android:id="@+id/card_grid_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/cardColor"
-        android:gravity="center" />
+        android:background="@drawable/flash_card_image"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="24sp" />
 </LinearLayout>
