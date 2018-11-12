@@ -52,4 +52,5 @@ public class CardViewModel extends AndroidViewModel {
     int countCardSet(String setName) { return cardRepository.countCardSet(setName); }
 
     public void updateCards( Card... cards) { cardRepository.updateCards(cards); }
+    public void updateCard( Card card ) { cardRepository.updateCard(card); }
 }

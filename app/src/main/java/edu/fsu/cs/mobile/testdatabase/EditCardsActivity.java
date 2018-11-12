@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.SortedSet;
@@ -28,20 +29,23 @@ public class EditCardsActivity extends AppCompatActivity implements CardListAdap
     CardListAdapter adapter;
 
     public static final int EDIT_SINGLE_ACTIVITY_REQUEST_CODE = 1;
+    public static final String EXTRA_SINGLE = "com.android.cardlistsql.SINGLE";
+    int pos;
+    String setName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Intent data = getIntent();
+        setName = data.getStringExtra(CardSetActivity.EXTRA_EDIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_cards);
 
-        Intent data = getIntent();
-        String info = data.getStringExtra(CardSetActivity.EXTRA_EDIT);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if( info != null )
-            getSupportActionBar().setTitle( "Edit which cards in " + info + "?" );
+        if( setName != null )
+            getSupportActionBar().setTitle( "Edit which cards in " + setName + "?" );
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +66,7 @@ public class EditCardsActivity extends AppCompatActivity implements CardListAdap
         adapter = new CardListAdapter(this);
 
         mCardViewModel = ViewModelProviders.of(this).get(CardViewModel.class);
-        mCardViewModel.getSetCards(info).observe(this, new Observer<List<Card>>() {
+        mCardViewModel.getSetCards(setName).observe(this, new Observer<List<Card>>() {
             @Override
             public void onChanged(@Nullable final List<Card> cards) {
                 adapter.setCards(cards);
@@ -77,13 +81,36 @@ public class EditCardsActivity extends AppCompatActivity implements CardListAdap
 
     @Override
     public void onItemClick(View view, int position ) {
-        RecyclerView recyclerView = findViewById(R.id.edit_setrecyclerview);
-        RecyclerView.ViewHolder holder = recyclerView.findViewHolderForAdapterPosition(position);
-        TextView textView = holder.itemView.findViewById(R.id.card_grid_item);
+        Card theCard = adapter.getCardAt(position);
+        pos = position;
 
         Intent intent = new Intent( EditCardsActivity.this, EditSingleActivity.class);
+        String[] info = {theCard.getFront(),
+                         theCard.getBack()};
+
+        intent.putExtra(EXTRA_SINGLE, info);
         startActivityForResult(intent, EDIT_SINGLE_ACTIVITY_REQUEST_CODE);
 
+    }
+
+    public void onActivityResult( int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Card theCard = adapter.getCardAt(pos);
+
+        if( requestCode == EDIT_SINGLE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK ) {
+            // Since NewCard activity now only asks for the front and back, use the
+            //      setName from MainActivity's intent
+            String[] newInfo = data.getStringArrayExtra(EditSingleActivity.EXTRA_REPLY);
+            theCard.setFront(newInfo[0]);
+            theCard.setBack(newInfo[1]);
+            mCardViewModel.updateCard(theCard);
+        }
+        else if( requestCode == EDIT_SINGLE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_CANCELED ){
+            Toast.makeText(
+                    getApplicationContext(),
+                    R.string.empty_not_saved,
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
     // To skip slide animation when backing out of activity

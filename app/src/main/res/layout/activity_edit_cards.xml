@@ -21,7 +21,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_delete_cards"/>
+    <include layout="@layout/content_edit_cards"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -29,6 +29,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right|bottom"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_delete_black_24dp" />
+        android:src="@drawable/ic_check_black_24dp" />
 
 </android.support.design.widget.CoordinatorLayout>

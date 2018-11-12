@@ -118,8 +118,8 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
         RecyclerView.ViewHolder holder = recyclerView.findViewHolderForAdapterPosition(position);
         TextView textView = holder.itemView.findViewById(R.id.card_grid_item);
 
-        String currentBack = adapter.getCards().get(position).getBack();
-        String currentFront = adapter.getCards().get(position).getFront();
+        String currentBack = adapter.getCardAt(position).getBack();
+        String currentFront = adapter.getCardAt(position).getFront();
 
         if ( currentFront.equals(textView.getText()) )
             textView.setText(currentBack);
@@ -145,7 +145,7 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
 
         if (id == R.id.edit_cards) {
             Intent editIntent = new Intent(CardSetActivity.this, EditCardsActivity.class);
-            editIntent.putExtra( EXTRA_DELETE, data.getStringExtra(MainActivity.EXTRA_MESSAGE) );
+            editIntent.putExtra( EXTRA_EDIT, data.getStringExtra(MainActivity.EXTRA_MESSAGE) );
             startActivity( editIntent );
             overridePendingTransition(0,0); // To skip animation
             return true;

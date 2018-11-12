@@ -88,4 +88,10 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         return mCards;
     }
 
+    public Card getCardAt(int pos) {
+        return mCards.get(pos);
+    }
+
+
+
 }

@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import edu.fsu.cs.mobile.testdatabase.Database.Card;
+
 // Activity to add a user-inputted card to the database
 public class EditSingleActivity extends AppCompatActivity {
     public static final String EXTRA_REPLY = "com.android.cardlistsql.REPLY";
@@ -20,8 +22,15 @@ public class EditSingleActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_card);
+
+        Intent data = getIntent();
+        String[] info = data.getStringArrayExtra(EditCardsActivity.EXTRA_SINGLE);
+
         mEditFront = findViewById(R.id.edit_front);
         mEditBack = findViewById(R.id.edit_back);
+
+        mEditFront.setText(info[0]);
+        mEditBack.setText(info[1]);
 
         final Button button = findViewById(R.id.button_save);
         button.setOnClickListener(new View.OnClickListener() {
@@ -38,7 +47,6 @@ public class EditSingleActivity extends AppCompatActivity {
                     replyIntent.putExtra(EXTRA_REPLY, info);
                     setResult(RESULT_OK, replyIntent);
                 }
-                // Don't know what finish() does. Sorry.
                 finish();
             }
         });
