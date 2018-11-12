@@ -30,6 +30,8 @@ public class NewCardActivity extends AppCompatActivity {
                 // disallows card with only whitespace
                 if ( mEditFront.getText().toString().trim().length() == 0 ||
                       mEditBack.getText().toString().trim().length() == 0) {
+                    //TODO: Error checking here is generally chaotic. Can't have whitespace only cards
+                    //  can be handled either here, or in the onActivityResult function of CardSetActivity. Take your pick.
                     setResult( RESULT_CANCELED, replyIntent );
                 } else {
                     String[] info = {mEditFront.getText().toString(),

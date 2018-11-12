@@ -28,6 +28,7 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
 
     public static final String EXTRA_REPLY = "com.android.cardlistsql.REPLY";
     public static final String EXTRA_DELETE = "com.android.cardlistsql.DELETE";
+    public static final String EXTRA_EDIT= "com.android.cardlistsql.EDIT";
     public static final int NEW_CARD_ACTIVITY_REQUEST_CODE = 1;
     public static final int DELETE_CARDS_ACTIVITY_REQUEST_CODE = 1;
 
@@ -138,6 +139,14 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
             Intent deleteIntent = new Intent(CardSetActivity.this, DeleteCardsActivity.class);
             deleteIntent.putExtra( EXTRA_DELETE, data.getStringExtra(MainActivity.EXTRA_MESSAGE) );
             startActivity( deleteIntent );
+            overridePendingTransition(0,0); // To skip animation
+            return true;
+        }
+
+        if (id == R.id.edit_cards) {
+            Intent editIntent = new Intent(CardSetActivity.this, EditCardsActivity.class);
+            editIntent.putExtra( EXTRA_DELETE, data.getStringExtra(MainActivity.EXTRA_MESSAGE) );
+            startActivity( editIntent );
             overridePendingTransition(0,0); // To skip animation
             return true;
         }

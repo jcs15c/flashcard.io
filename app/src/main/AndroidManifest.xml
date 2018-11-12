@@ -20,7 +20,9 @@
         <activity android:name=".NewCardActivity" />
         <activity android:name=".NewSetActivity" />
         <activity android:name=".DeleteCardsActivity" />
-        <activity android:name=".ReviewGameActivity"></activity>
+        <activity android:name=".ReviewGameActivity" />
+        <activity android:name=".EditCardsActivity" />
+        <activity android:name=".EditSingleActivity" />
     </application>
 
 </manifest>

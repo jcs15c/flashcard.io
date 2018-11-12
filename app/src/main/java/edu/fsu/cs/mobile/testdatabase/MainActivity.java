@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
         submenu_rename.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //TODO: prevent renaming to a duplicate, or to a whitespace only name
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("Rename " + selectedSet + "?");
                 View viewInflated = LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_rename_set,
@@ -210,6 +211,7 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
         submenu_clone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //TODO: prevent adding card if selectedSet + " - Copy" already exists
                 List<Card> new_cards = mCardViewModel.getStaticSet( selectedSet );
                 Log.d("LOOP", String.valueOf(new_cards.size()));
                 selectedSet += " - Copy";
@@ -254,13 +256,12 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
         super.onActivityResult(requestCode, resultCode, data);
 
         if( requestCode == NEW_SET_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK ) {
-            // If we come from the NewSetActivity, we need to add a new card. Needs fixing
+            //TODO: prevent adding new set if setName is already the name of a set
             String setName = data.getStringExtra(NewCardActivity.EXTRA_REPLY);
             mCardViewModel.insertSet(setName);
         }
         else if( requestCode == NEW_SET_ACTIVITY_REQUEST_CODE && resultCode == RESULT_CANCELED)
         {
-            //TODO: Still some inconsistent behavior when pressing back to leave an activity.
             Toast.makeText(
                     getApplicationContext(),
                     R.string.empty_not_saved,
