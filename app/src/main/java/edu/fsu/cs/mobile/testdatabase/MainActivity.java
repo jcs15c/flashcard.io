@@ -301,6 +301,12 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
             return true;
         }
 
+        if (id == R.id.settings) {
+            Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+            settingsIntent.putExtra(EXTRA_MESSAGE, selectedSet);
+            startActivity(settingsIntent);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
