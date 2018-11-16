@@ -13,7 +13,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             setTheme(R.style.DarkTheme);
         }
@@ -49,6 +48,7 @@ public class SettingsActivity extends AppCompatActivity {
     public void restartApp() {
         Intent myIntent = new Intent(getApplicationContext(),SettingsActivity.class);
         startActivity(myIntent);
+        overridePendingTransition(0,0); // To skip animation
         finish();
     }
 
