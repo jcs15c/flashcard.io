@@ -1,9 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="edu.fsu.cs.mobile.testdatabase.ReviewGameActivity">
+    android:layout_height="match_parent">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/review_percentage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="false"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="-18dp"
+        android:layout_marginEnd="-1dp" />
+
+    <TableLayout
+        android:id="@+id/review_fronts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:padding="20dp"
+        android:stretchColumns="*">
+
+        <TextView
+            android:id="@+id/review_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:padding="50dp"
+            android:text="back" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/review_front1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:padding="20dp"
+                android:text="front 1"
+                android:textAllCaps="false"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/review_front2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:padding="20dp"
+                android:text="front2"
+                android:textAllCaps="false"
+                android:textAlignment="center" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/review_front3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:padding="20dp"
+                android:text="front3"
+                android:textAllCaps="false"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/review_front4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:backgroundTintMode="screen"
+                android:padding="20dp"
+                android:text="front4"
+                android:textAllCaps="false"
+                android:textAlignment="center" />
+
+        </TableRow>
+
+    </TableLayout>
+
+</RelativeLayout>
