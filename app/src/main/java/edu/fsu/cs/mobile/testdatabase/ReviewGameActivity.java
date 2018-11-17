@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -37,6 +38,16 @@ public class ReviewGameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_game);
+
+        Intent data = getIntent();
+        String setName = data.getStringExtra(MainActivity.EXTRA_REVIEW);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if( setName != null )
+            getSupportActionBar().setTitle( setName );
+
         final TextView back = findViewById(R.id.review_back);
         final Button btn1 = findViewById(R.id.review_front1);
         final Button btn2 = findViewById(R.id.review_front2);
@@ -45,8 +56,7 @@ public class ReviewGameActivity extends AppCompatActivity {
         final TextView percent = findViewById(R.id.review_percentage);
         // For the rest of the activity, only use the cards at the time of the activity's creation.
         mCardViewModel = ViewModelProviders.of(this).get(CardViewModel.class);
-        Intent data = getIntent();
-        String setName = data.getStringExtra(MainActivity.EXTRA_REVIEW);
+
         review_cards = mCardViewModel.getStaticSet( setName );
         indexes = new ArrayList<Integer>();
         randomIndexes = new ArrayList<Integer>();

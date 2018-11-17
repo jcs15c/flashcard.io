@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
@@ -21,6 +22,13 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.settings_toolbar);
+        Log.d("TAG", String.valueOf(toolbar == null));
+
+        setSupportActionBar(toolbar);
+        Log.d("TAG", String.valueOf(getSupportActionBar() == null));
+
+        getSupportActionBar().setTitle( "Settings" );
         nightSwitch = (Switch)findViewById(R.id.night_switch);
         if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             nightSwitch.setChecked(true);
@@ -41,8 +49,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         Intent data = getIntent();
         String info = data.getStringExtra(MainActivity.EXTRA_MESSAGE);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+
     }
 
     public void restartApp() {

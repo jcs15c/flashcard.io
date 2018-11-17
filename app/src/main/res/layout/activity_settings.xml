@@ -8,6 +8,7 @@
     android:background="?attr/backgroundcolor"
     tools:context="edu.fsu.cs.mobile.testdatabase.SettingsActivity">
 
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
