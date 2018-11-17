@@ -23,6 +23,10 @@ public class ReviewGameActivity extends AppCompatActivity {
     ArrayList<Integer> indexes;
     ArrayList<Integer> randomIndexes;
     ArrayList<Integer> options;
+    ArrayList<Button> btns;
+    TextView back;
+    TextView percent;
+    Button goBack;
     int rand_int1 = 0;
     int rand_int2 = 0;
     int rand_int3 = 0;
@@ -48,12 +52,26 @@ public class ReviewGameActivity extends AppCompatActivity {
         if( setName != null )
             getSupportActionBar().setTitle( setName );
 
-        final TextView back = findViewById(R.id.review_back);
-        final Button btn1 = findViewById(R.id.review_front1);
-        final Button btn2 = findViewById(R.id.review_front2);
-        final Button btn3 = findViewById(R.id.review_front3);
-        final Button btn4 = findViewById(R.id.review_front4);
-        final TextView percent = findViewById(R.id.review_percentage);
+        // Initialize XML elements
+        btns = new ArrayList<Button>() {
+            {
+                add((Button) findViewById(R.id.review_front1));
+                add((Button) findViewById(R.id.review_front2));
+                add((Button) findViewById(R.id.review_front3));
+                add((Button) findViewById(R.id.review_front4));
+            }
+        };
+
+        back = findViewById(R.id.review_back);
+        percent = findViewById(R.id.review_percentage);
+        goBack = findViewById(R.id.goBackButton);
+
+        goBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         // For the rest of the activity, only use the cards at the time of the activity's creation.
         mCardViewModel = ViewModelProviders.of(this).get(CardViewModel.class);
 
@@ -61,6 +79,7 @@ public class ReviewGameActivity extends AppCompatActivity {
         indexes = new ArrayList<Integer>();
         randomIndexes = new ArrayList<Integer>();
         options = new ArrayList<Integer>();
+
 
         //this loop creates an order of what the backs will be called in
         max_size = review_cards.size();
@@ -85,15 +104,23 @@ public class ReviewGameActivity extends AppCompatActivity {
         options.add(correct);
         Collections.shuffle(options);
         back.setText(review_cards.get(correct).getBack());
-        btn1.setText(review_cards.get(options.get(0)).getFront());
-        btn2.setText(review_cards.get(options.get(1)).getFront());
-        btn3.setText(review_cards.get(options.get(2)).getFront());
-        btn4.setText(review_cards.get(options.get(3)).getFront());
-        btn1.setOnClickListener(new View.OnClickListener() {
+
+        for( int i = 0; i < 4; i++) {
+            btns.get(i).setText(review_cards.get(options.get(i)).getFront());
+        }
+
+        for( int i = 0; i < 4; i++) {
+            setUpButton(i);
+        }
+
+    }
+
+    private void setUpButton( final int ind  ) {
+        btns.get(ind).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //If front1 is equal to front to
-                if(options.get(0)== correct){
+                if(options.get(ind) == correct){
                     //add to correct counter
                     //add to counter
                     correct_count++;
@@ -132,10 +159,9 @@ public class ReviewGameActivity extends AppCompatActivity {
                     options.add(correct);
                     Collections.shuffle(options);
                     back.setText(review_cards.get(correct).getBack());
-                    btn1.setText(review_cards.get(options.get(0)).getFront());
-                    btn2.setText(review_cards.get(options.get(1)).getFront());
-                    btn3.setText(review_cards.get(options.get(2)).getFront());
-                    btn4.setText(review_cards.get(options.get(3)).getFront());
+                    for( int i = 0; i < 4; i++ ){
+                        btns.get(i).setText(review_cards.get(options.get(i)).getFront());
+                    }
                     percentage = ((double)Math.round(((double)correct_count / number_count)*10000)/100);
                     String temp = correct_count + "/" + number_count + " = " + percentage + "%";
                     percent.setText(temp);
@@ -145,207 +171,14 @@ public class ReviewGameActivity extends AppCompatActivity {
                     String temp = correct_count + "/" + number_count + " = " + percentage + "%";
                     percent.setText(temp);
                     back.setText("Review Complete");
-                    btn1.setText("");
-                    btn2.setText("");
-                    btn3.setText("");
-                    btn4.setText("");
+                    goBack.setVisibility(View.VISIBLE);
+                    for( int i = 0; i < 4; i++ ){
+                        btns.get(i).setText("");
+                    }
                     correct = 999;
-                }
-            }
-        });
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //If front2 is equal to front to
-                if(options.get(1)== correct){
-                    //add to correct counter
-                    //add to counter
-                    correct_count++;
-                    number_count++;
-                    if(indexes.isEmpty()){
-                        stop = true;
-                    }
-                }
-                else{
-                    //add to counter
-                    //add correct index back into array
-                    if(correct!=999) {
-                        number_count++;
-                        indexes.add(correct);
-                    }
-                }
-                //move to next index in array
-                //reset randomIndexes and options
-                if(!stop) {
-                    correct = indexes.get(0);
-                    randomIndexes.clear();
-                    options.clear();
-                    indexes.remove(0);
-                    for (i = 0; i < max_size; i++) {
-                        if (correct != i) {
-                            randomIndexes.add(i);
-                        }
-                    }
-                    Collections.shuffle(randomIndexes);
-                    rand_int1 = randomIndexes.get(0);
-                    rand_int2 = randomIndexes.get(1);
-                    rand_int3 = randomIndexes.get(2);
-                    options.add(rand_int1);
-                    options.add(rand_int2);
-                    options.add(rand_int3);
-                    options.add(correct);
-                    Collections.shuffle(options);
-                    back.setText(review_cards.get(correct).getBack());
-                    btn1.setText(review_cards.get(options.get(0)).getFront());
-                    btn2.setText(review_cards.get(options.get(1)).getFront());
-                    btn3.setText(review_cards.get(options.get(2)).getFront());
-                    btn4.setText(review_cards.get(options.get(3)).getFront());
-                    percentage = ((double)Math.round(((double)correct_count / number_count)*10000)/100);
-                    String temp = correct_count + "/" + number_count + " = " + percentage + "%";
-                    percent.setText(temp);
-                }
-                else{
-                    percentage = ((double)Math.round(((double)correct_count / number_count)*10000)/100);
-                    String temp = correct_count + "/" + number_count + " = " + percentage + "%";
-                    percent.setText(temp);
-                    back.setText("Review Complete");
-                    btn1.setText("");
-                    btn2.setText("");
-                    btn3.setText("");
-                    btn4.setText("");
-                    correct = 999;
-                }
-            }
-        });
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //If front3 is equal to front to
-                if(options.get(2)== correct){
-                    //add to correct counter
-                    //add to counter
-                    correct_count++;
-                    number_count++;
-                    if(indexes.isEmpty()){
-                        stop = true;
-                    }
-                }
-                else{
-                    //add to counter
-                    //add correct index back into array
-                    if(correct!=999) {
-                        number_count++;
-                        indexes.add(correct);
-                    }
-                }
-                //move to next index in array
-                //reset randomIndexes and options
-                if(!stop) {
-                    correct = indexes.get(0);
-                    randomIndexes.clear();
-                    options.clear();
-                    indexes.remove(0);
-                    for (i = 0; i < max_size; i++) {
-                        if (correct != i) {
-                            randomIndexes.add(i);
-                        }
-                    }
-                    Collections.shuffle(randomIndexes);
-                    rand_int1 = randomIndexes.get(0);
-                    rand_int2 = randomIndexes.get(1);
-                    rand_int3 = randomIndexes.get(2);
-                    options.add(rand_int1);
-                    options.add(rand_int2);
-                    options.add(rand_int3);
-                    options.add(correct);
-                    Collections.shuffle(options);
-                    back.setText(review_cards.get(correct).getBack());
-                    btn1.setText(review_cards.get(options.get(0)).getFront());
-                    btn2.setText(review_cards.get(options.get(1)).getFront());
-                    btn3.setText(review_cards.get(options.get(2)).getFront());
-                    btn4.setText(review_cards.get(options.get(3)).getFront());
-                    percentage = ((double)Math.round(((double)correct_count / number_count)*10000)/100);
-                    String temp = correct_count + "/" + number_count + " = " + percentage + "%";
-                    percent.setText(temp);
-                }
-                else{
-                    percentage = ((double)Math.round(((double)correct_count / number_count)*10000)/100);
-                    String temp = correct_count + "/" + number_count + " = " + percentage + "%";
-                    percent.setText(temp);
-                    back.setText("Review Complete");
-                    btn1.setText("");
-                    btn2.setText("");
-                    btn3.setText("");
-                    btn4.setText("");
-                    correct = 999;
-                }
-            }
-        });
-        btn4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //If front4 is equal to front to
-                if(options.get(3)== correct){
-                    //add to correct counter
-                    //add to counter
-                    correct_count++;
-                    number_count++;
-                    if(indexes.isEmpty()){
-                        stop = true;
-                    }
-                }
-                else{
-                    //add to counter
-                    //add correct index back into array
-                    if(correct!= 999) {
-                        indexes.add(correct);
-                        number_count++;
-                    }
 
                 }
-                //move to next index in array
-                //reset randomIndexes and options
-                if(!stop) {
-                    correct = indexes.get(0);
-                    randomIndexes.clear();
-                    options.clear();
-                    indexes.remove(0);
-                    for (i = 0; i < max_size; i++) {
-                        if (correct != i) {
-                            randomIndexes.add(i);
-                        }
-                    }
-                    Collections.shuffle(randomIndexes);
-                    rand_int1 = randomIndexes.get(0);
-                    rand_int2 = randomIndexes.get(1);
-                    rand_int3 = randomIndexes.get(2);
-                    options.add(rand_int1);
-                    options.add(rand_int2);
-                    options.add(rand_int3);
-                    options.add(correct);
-                    Collections.shuffle(options);
-                    back.setText(review_cards.get(correct).getBack());
-                    btn1.setText(review_cards.get(options.get(0)).getFront());
-                    btn2.setText(review_cards.get(options.get(1)).getFront());
-                    btn3.setText(review_cards.get(options.get(2)).getFront());
-                    btn4.setText(review_cards.get(options.get(3)).getFront());
-                    percentage = ((double)Math.round(((double)correct_count / number_count)*10000)/100);
-                    String temp = correct_count + "/" + number_count + " = " + percentage + "%";
-                    percent.setText(temp);
-                }
-                else{
-                    percentage = ((double)Math.round(((double)correct_count / number_count)*10000)/100);
-                    String temp = correct_count + "/" + number_count + " = " + percentage + "%";
-                    percent.setText(temp);
-                    back.setText("Review Complete");
-                    btn1.setText("");
-                    btn2.setText("");
-                    btn3.setText("");
-                    btn4.setText("");
-                    correct = 999;
-                }
             }
         });
-
     }
 }
