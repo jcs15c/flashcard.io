@@ -1,6 +1,7 @@
 package edu.fsu.cs.mobile.testdatabase;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +18,7 @@ public class SetNameAdapter extends RecyclerView.Adapter<SetNameAdapter.ViewHold
     private final LayoutInflater mInflater;
     private List<String> mStrings;
     private ItemClickListener mClickListener;
+    //private int selectedPosition = -1;
 
     SetNameAdapter( Context context) {
         this.mInflater = LayoutInflater.from(context);
@@ -34,6 +36,11 @@ public class SetNameAdapter extends RecyclerView.Adapter<SetNameAdapter.ViewHold
         if( mStrings != null ){
             String current = mStrings.get( position );
             holder.myTextView.setText(current);
+
+            if( position == MainActivity.selectedPosition )
+                holder.myTextView.setBackgroundColor(Color.parseColor("#99d9e9"));
+            else
+                holder.myTextView.setBackgroundColor(Color.parseColor("#C6C6C6"));
         } else {
             holder.myTextView.setText("No Sets!");
         }
@@ -76,6 +83,4 @@ public class SetNameAdapter extends RecyclerView.Adapter<SetNameAdapter.ViewHold
     }
 
     public String getNameFromPosition(int pos) { return mStrings.get(pos); }
-
-    public void refreshView() { notifyDataSetChanged(); }
 }

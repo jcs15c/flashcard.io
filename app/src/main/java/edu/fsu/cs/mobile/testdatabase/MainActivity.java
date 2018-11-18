@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
     public static final String EXTRA_MESSAGE = "edu.fsu.cs.mobile.testdatabase.MESSAGE";
     public static final String EXTRA_REVIEW = "com.android.cardlistsql.REVIEW";
 
-    private int prevPosition ;
-    private String selectedSet;
+    protected static int selectedPosition = -1;
+
     private String newSetName = "";
 
     @Override
@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
         getLayoutInflater().inflate(R.layout.text_hint, subMenu, true);
         getLayoutInflater().inflate(R.layout.submenu_options, subMenu, true);
         setupSubmenuButtons(); //Only initialize buttons after they're added to layout
+        findViewById(R.id.submenu_table).setVisibility(View.INVISIBLE);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -105,25 +106,6 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
         adapter.setClickListener(this);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        refreshRecyclerView();
-    }
-
-    private void refreshRecyclerView() {
-        // Reset menu selection
-        RecyclerView recyclerView = findViewById(R.id.set_name_recyclerview);
-
-        // Kinda a hacky way to do it, but probably somehow forces the adapter to redraw the view
-        recyclerView.setAdapter(adapter);
-
-        // Make menu options inaccessible, and menu hint visible
-        findViewById(R.id.text_hint).setVisibility(View.VISIBLE);
-        findViewById(R.id.submenu_table).setVisibility(View.INVISIBLE);
-        prevPosition = -1;
-    }
-
     private void setupSubmenuButtons() {
         Button submenu_explore = (Button) findViewById(R.id.submenu_explore);
         Button submenu_review = (Button) findViewById(R.id.submenu_review);
@@ -135,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
             @Override
             public void onClick(View view) {
                 Intent exploreIntent = new Intent( MainActivity.this, CardSetActivity.class);
-                exploreIntent.putExtra(EXTRA_MESSAGE, selectedSet);
+                exploreIntent.putExtra(EXTRA_MESSAGE, adapter.getNameFromPosition(selectedPosition));
                 startActivityForResult(exploreIntent, CARD_SET_ACTIVITY_REQUEST_CODE);            }
         });
 
@@ -143,8 +125,9 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
             @Override
             public void onClick(View view) {
                 Intent reviewIntent = new Intent(MainActivity.this, ReviewGameActivity.class);
-                reviewIntent.putExtra( EXTRA_REVIEW, selectedSet);
-                startActivity( reviewIntent );            }
+                reviewIntent.putExtra( EXTRA_REVIEW, adapter.getNameFromPosition(selectedPosition));
+                startActivity( reviewIntent );
+            }
         });
 
         submenu_rename.setOnClickListener(new View.OnClickListener() {
@@ -152,12 +135,12 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
             public void onClick(View view) {
                 //TODO: prevent renaming to a duplicate, or to a whitespace only name
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Rename " + selectedSet + "?");
+                builder.setTitle("Rename " + adapter.getNameFromPosition(selectedPosition) + "?");
                 View viewInflated = LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_rename_set,
                         (ViewGroup) findViewById(android.R.id.content), false);
 
                 final EditText input = (EditText) viewInflated.findViewById(R.id.input);
-                input.setHint(selectedSet);
+                input.setHint(adapter.getNameFromPosition(selectedPosition));
 
                 builder.setView(viewInflated);
 
@@ -165,9 +148,8 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        refreshRecyclerView();
                         newSetName = input.getText().toString();
-                        mCardViewModel.renameSet(selectedSet, newSetName);
+                        mCardViewModel.renameSet(adapter.getNameFromPosition(selectedPosition), newSetName);
 
                     }
                 });
@@ -175,7 +157,6 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
-                        refreshRecyclerView();
                     }
                 });
                 builder.show();
@@ -187,21 +168,22 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Are you sure you want to delete " + selectedSet + "?");
+                builder.setTitle("Are you sure you want to delete " + adapter.getNameFromPosition(selectedPosition) + "?");
 
                 builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        mCardViewModel.deleteSet( selectedSet );
-                        refreshRecyclerView();
+                        mCardViewModel.deleteSet( adapter.getNameFromPosition(selectedPosition) );
+                        findViewById(R.id.submenu_table).setVisibility(View.INVISIBLE);
+                        findViewById(R.id.text_hint).setVisibility(View.VISIBLE);
+                        selectedPosition = -1;
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
-                        refreshRecyclerView();
                     }
                 });
                 builder.show();
@@ -212,15 +194,12 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
             @Override
             public void onClick(View view) {
                 //TODO: prevent adding card if selectedSet + " - Copy" already exists
-                List<Card> new_cards = mCardViewModel.getStaticSet( selectedSet );
-                Log.d("LOOP", String.valueOf(new_cards.size()));
-                selectedSet += " - Copy";
-                mCardViewModel.insertSet(selectedSet);
+                List<Card> new_cards = mCardViewModel.getStaticSet( adapter.getNameFromPosition(selectedPosition) );
+                String thisSetName = adapter.getNameFromPosition(selectedPosition);
+                mCardViewModel.insertSet(thisSetName + " - Copy");
                 for( Card C : new_cards ) {
-                    Log.d("LOOP", "EEK" );
-                    mCardViewModel.insertCard(new Card(selectedSet, C.getFront(), C.getBack()));
+                    mCardViewModel.insertCard(new Card(thisSetName, C.getFront(), C.getBack()));
                 }
-                refreshRecyclerView();
             }
         });
     }
@@ -233,21 +212,8 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
         findViewById(R.id.text_hint).setVisibility(View.INVISIBLE);
         findViewById(R.id.submenu_table).setVisibility(View.VISIBLE);
 
-        RecyclerView recyclerView = findViewById(R.id.set_name_recyclerview);
-
-        if ( prevPosition != -1 ) {
-            RecyclerView.ViewHolder prevHolder = recyclerView.findViewHolderForAdapterPosition(prevPosition);
-            TextView prevView = prevHolder.itemView.findViewById(R.id.set_grid_item);
-            prevView.setBackgroundColor(Color.parseColor("#C6C6C6"));
-        }
-
-        RecyclerView.ViewHolder holder = recyclerView.findViewHolderForAdapterPosition(position);
-        TextView pressedView = holder.itemView.findViewById(R.id.set_grid_item);
-        pressedView.setBackgroundColor(Color.parseColor("#99d9e9"));
-
-        selectedSet = pressedView.getText().toString();
-        prevPosition = position;
-
+        selectedPosition = position;
+        adapter.notifyDataSetChanged();
     }
 
     // This is definitely written poorly, I wasn't sure how to do the error checking
@@ -303,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
 
         if (id == R.id.settings) {
             Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
-            settingsIntent.putExtra(EXTRA_MESSAGE, selectedSet);
+            settingsIntent.putExtra(EXTRA_MESSAGE, adapter.getNameFromPosition(selectedPosition));
             startActivity(settingsIntent);
         }
 
