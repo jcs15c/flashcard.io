@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
 
     protected static int selectedPosition = -1;
 
-    private String newSetName = "";
+    //private String newSetName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        newSetName = input.getText().toString();
+                        String newSetName = input.getText().toString();
                         mCardViewModel.renameSet(adapter.getNameFromPosition(selectedPosition), newSetName);
 
                     }

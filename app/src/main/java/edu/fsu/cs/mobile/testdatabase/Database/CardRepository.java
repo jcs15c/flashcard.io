@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.util.List;
-import java.util.UUID;
+
 /*
 This class serves as another interface for the Database, containing within it a single Database
 member data, and a variety of operations on said database. Some of these operations are encapsulated

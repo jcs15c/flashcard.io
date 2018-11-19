@@ -97,16 +97,6 @@ public class DeleteCardsActivity extends AppCompatActivity implements CardListAd
 
     }
 
-    //We actually don't need this if we go back to the previous activity after this one. it resets.
-    //  The bug is still present, and i dont know why it happened, but we can ignore it for now.
-    /*
-    private void resetColor( int pos ){
-        RecyclerView recyclerView = findViewById(R.id.delete_setrecyclerview);
-        RecyclerView.ViewHolder holder = recyclerView.findViewHolderForAdapterPosition(pos);
-        TextView textView = holder.itemView.findViewById(R.id.card_grid_item);
-        textView.setBackgroundColor(Color.parseColor("#C6C6C6"));
-    }
-    */
 
     // To skip slide animation when backing out of activity
     @Override

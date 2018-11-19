@@ -18,7 +18,7 @@ public class SetNameAdapter extends RecyclerView.Adapter<SetNameAdapter.ViewHold
     private final LayoutInflater mInflater;
     private List<String> mStrings;
     private ItemClickListener mClickListener;
-    //private int selectedPosition = -1;
+
 
     SetNameAdapter( Context context) {
         this.mInflater = LayoutInflater.from(context);

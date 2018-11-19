@@ -8,7 +8,6 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
 import java.util.List;
-import java.util.UUID;
 /*
 The Data Access Object provides the interface between SQL commands and Java functions.
 The annotations describe the kind of SQL operation and its definition, while
@@ -56,9 +55,6 @@ public interface CardDAO{
 
     @Delete
     void deleteCards( Card... card );
-
-    //@Query("DELETE FROM cards WHERE setName=:setName AND front=:front AND back=:back")
-    //void deleteCard( String setName, String front, String back);
 
     @Query("DELETE FROM cards WHERE setName=:setName")
     void deleteSet(String setName);
