@@ -2,8 +2,10 @@ package edu.fsu.cs.mobile.testdatabase;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -47,11 +49,20 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
 
     protected static int selectedPosition = -1;
 
+    boolean darkModeOn;
     //private String newSetName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
+
+        SharedPreferences settings = getSharedPreferences("MySettings", Context.MODE_PRIVATE);
+        boolean darkModeOn = settings.getBoolean("dark_mode", false);
+
+        if(darkModeOn)
+            setTheme(R.style.DarkTheme);
+        else
+            setTheme(R.style.AppTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -269,7 +280,7 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
 
         if (id == R.id.settings) {
             Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
-            settingsIntent.putExtra(EXTRA_MESSAGE, adapter.getNameFromPosition(selectedPosition));
+            //settingsIntent.putExtra(EXTRA_MESSAGE, adapter.getNameFromPosition(selectedPosition));
             startActivity(settingsIntent);
         }
 
