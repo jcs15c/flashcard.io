@@ -59,7 +59,11 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
         getLayoutInflater().inflate(R.layout.text_hint, subMenu, true);
         getLayoutInflater().inflate(R.layout.submenu_options, subMenu, true);
         setupSubmenuButtons(); //Only initialize buttons after they're added to layout
-        findViewById(R.id.submenu_table).setVisibility(View.INVISIBLE);
+
+        if( selectedPosition == -1 ) // If there is no selected set
+            findViewById(R.id.submenu_table).setVisibility(View.INVISIBLE);
+        else //If a set has been selected
+            findViewById(R.id.text_hint).setVisibility(View.INVISIBLE);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -269,7 +273,7 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
 
         if (id == R.id.settings) {
             Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
-            settingsIntent.putExtra(EXTRA_MESSAGE, adapter.getNameFromPosition(selectedPosition));
+            //settingsIntent.putExtra(EXTRA_MESSAGE);
             startActivity(settingsIntent);
         }
 
