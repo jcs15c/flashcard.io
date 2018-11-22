@@ -144,16 +144,22 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
         submenu_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent reviewIntent = new Intent(MainActivity.this, ReviewGameActivity.class);
-                reviewIntent.putExtra( EXTRA_REVIEW, adapter.getNameFromPosition(selectedPosition));
-                startActivity( reviewIntent );
+                if( mCardViewModel.countCardSet(adapter.getNameFromPosition(selectedPosition)) >= 4 ) {
+                    Intent reviewIntent = new Intent(MainActivity.this, ReviewGameActivity.class);
+                    reviewIntent.putExtra(EXTRA_REVIEW, adapter.getNameFromPosition(selectedPosition));
+                    startActivity(reviewIntent);
+                }
+                else
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "Too few cards for review game",
+                            Toast.LENGTH_LONG).show();
             }
         });
 
         submenu_rename.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: prevent renaming to a duplicate, or to a whitespace only name
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("Rename " + adapter.getNameFromPosition(selectedPosition) + "?");
                 View viewInflated = LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_rename_set,
@@ -169,8 +175,20 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         String newSetName = input.getText().toString();
-                        mCardViewModel.renameSet(adapter.getNameFromPosition(selectedPosition), newSetName);
-
+                        if ( newSetName.trim().length() == 0 ) {
+                            Toast.makeText(
+                                    getApplicationContext(),
+                                    "Set name cannot be empty",
+                                    Toast.LENGTH_LONG).show();
+                        } else if ( adapter.cardNamesContains(newSetName) ) {
+                            Toast.makeText(
+                                    getApplicationContext(),
+                                    "Set names must be unique",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            mCardViewModel.renameSet(adapter.getNameFromPosition(selectedPosition), newSetName);
+                        }
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -213,12 +231,18 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
         submenu_clone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: prevent adding card if selectedSet + " - Copy" already exists
                 List<Card> new_cards = mCardViewModel.getStaticSet( adapter.getNameFromPosition(selectedPosition) );
-                String thisSetName = adapter.getNameFromPosition(selectedPosition);
-                mCardViewModel.insertSet(thisSetName + " - Copy");
-                for( Card C : new_cards ) {
-                    mCardViewModel.insertCard(new Card(thisSetName, C.getFront(), C.getBack()));
+                String thisSetName = adapter.getNameFromPosition(selectedPosition) + " - Copy";
+                if ( adapter.cardNamesContains(thisSetName) ) {
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "Copy already exists",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    mCardViewModel.insertSet(thisSetName);
+                    for (Card C : new_cards) {
+                        mCardViewModel.insertCard(new Card(thisSetName, C.getFront(), C.getBack()));
+                    }
                 }
             }
         });
@@ -254,19 +278,26 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
     public void onActivityResult( int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if( requestCode == NEW_SET_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK ) {
-            //TODO: prevent adding new set if setName is already the name of a set
-            String setName = data.getStringExtra(NewCardActivity.EXTRA_REPLY);
-            mCardViewModel.insertSet(setName);
+        if( requestCode == NEW_SET_ACTIVITY_REQUEST_CODE ) {
+            if( resultCode == RESULT_OK ) {
+
+                String setName = data.getStringExtra(NewCardActivity.EXTRA_REPLY);
+                if ( setName.trim().length() == 0 ) {
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "Set name cannot be empty",
+                            Toast.LENGTH_LONG).show();
+                } else if ( adapter.cardNamesContains(setName) ) {
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "Set names must be unique",
+                            Toast.LENGTH_LONG).show();
+                }
+                else {
+                    mCardViewModel.insertSet(setName);
+                }
+            }
         }
-        else if( requestCode == NEW_SET_ACTIVITY_REQUEST_CODE && resultCode == RESULT_CANCELED)
-        {
-            Toast.makeText(
-                    getApplicationContext(),
-                    R.string.empty_not_saved,
-                    Toast.LENGTH_LONG).show();
-        }
-        else {}
     }
 
 

@@ -107,27 +107,46 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
         Intent inputData = getIntent();
         String setName = inputData.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
-        if( requestCode == NEW_CARD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK ) {
-            // Since NewCard activity now only asks for the front and back, use the
-            //      setName from MainActivity's intent
-            String[] info = data.getStringArrayExtra(NewCardActivity.EXTRA_REPLY);
-            Card card = new Card(setName, info[0], info[1]);
-            mCardViewModel.insertCard(card);
-            flip_states.add(Boolean.FALSE);
+        if( requestCode == NEW_CARD_ACTIVITY_REQUEST_CODE ) {
+            if( resultCode == RESULT_OK ) {
+                String[] info = data.getStringArrayExtra(NewCardActivity.EXTRA_REPLY);
+                Card card = new Card(setName, info[0], info[1]);
+                if( info[0].trim().length() != 0 && info[1].trim().length() != 0 ) {
+                    mCardViewModel.insertCard(card);
+                    flip_states.add(Boolean.FALSE);
+                }
+                else {
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "Cards cannot be empty",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
         }
-        else if( requestCode == NEW_CARD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_CANCELED ){
-            Toast.makeText(
-                    getApplicationContext(),
-                    R.string.empty_not_saved,
-                    Toast.LENGTH_LONG).show();
+        else if( requestCode == EDIT_SINGLE_ACTIVITY_REQUEST_CODE ){
+            if( resultCode == RESULT_OK ) {
+                String[] newInfo = data.getStringArrayExtra(EditSingleActivity.EXTRA_REPLY);
+                if (newInfo[0].trim().length() != 0 && newInfo[1].trim().length() != 0) {
+                    Card theCard = adapter.getCardAt(edit_pos);
+                    theCard.setFront(newInfo[0]);
+                    theCard.setBack(newInfo[1]);
+                    mCardViewModel.updateCard(theCard);
+                } else {
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "Cards cannot be empty",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
         }
-        else if( requestCode == EDIT_SINGLE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK ){
-            Card theCard = adapter.getCardAt(edit_pos);
-
-            String[] newInfo = data.getStringArrayExtra(EditSingleActivity.EXTRA_REPLY);
-            theCard.setFront(newInfo[0]);
-            theCard.setBack(newInfo[1]);
-            mCardViewModel.updateCard(theCard);
+        else if( requestCode == DELETE_CARDS_ACTIVITY_REQUEST_CODE ){
+            if( resultCode == RESULT_OK ) {
+                int num_deleted = data.getIntExtra(DeleteCardsActivity.EXTRA_REPLY, 0);
+                Toast.makeText(
+                        getApplicationContext(),
+                        "Deleted " + String.valueOf(num_deleted) + " cards",
+                        Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -158,10 +177,9 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
         // Don't know exactly how this works, but each one of these 'if' blocks corresponds
         //      to a single action in the menu.
         if (id == R.id.delete_cards) {
-            //TODO: fix return error on deleteCards. Also seems kinda buggy if there are too many cards
             Intent deleteIntent = new Intent(CardSetActivity.this, DeleteCardsActivity.class);
             deleteIntent.putExtra( EXTRA_DELETE, data.getStringExtra(MainActivity.EXTRA_MESSAGE) );
-            startActivity( deleteIntent );
+            startActivityForResult( deleteIntent, DELETE_CARDS_ACTIVITY_REQUEST_CODE );
             overridePendingTransition(0,0); // To skip animation
             return true;
         }

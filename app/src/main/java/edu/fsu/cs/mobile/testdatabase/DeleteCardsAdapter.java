@@ -95,14 +95,6 @@ public class DeleteCardsAdapter extends RecyclerView.Adapter<DeleteCardsAdapter.
         DeleteCardsActivity.delete_states.set(pos, !DeleteCardsActivity.delete_states.get(pos));
     }
 
-    // This function may be bad practice, but I don't know enough one way or another.
-    // We should probably change this so that there's a single function 'flipCard' that
-    //       makes the adapter responsible for changing the text on the grid, not the activity.
-    //TODO: Replace with a "flipCard" method so that CardSetActivity isnt responsible for the logic
-    public List<Card> getCards() {
-        return mCards;
-    }
-
     public Card getCardAt(int pos) {
         return mCards.get(pos);
     }

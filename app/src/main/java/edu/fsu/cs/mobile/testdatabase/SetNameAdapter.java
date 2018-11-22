@@ -98,4 +98,6 @@ public class SetNameAdapter extends RecyclerView.Adapter<SetNameAdapter.ViewHold
     }
 
     public String getNameFromPosition(int pos) { return mStrings.get(pos); }
+
+    public boolean cardNamesContains( String setName ) { return mStrings.contains(setName); }
 }

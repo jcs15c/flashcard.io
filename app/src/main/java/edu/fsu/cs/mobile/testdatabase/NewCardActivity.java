@@ -27,20 +27,12 @@ public class NewCardActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent replyIntent = new Intent();
-                // disallows card with only whitespace
-                if ( mEditFront.getText().toString().trim().length() == 0 ||
-                      mEditBack.getText().toString().trim().length() == 0) {
-                    //TODO: Error checking here is generally chaotic. Can't have whitespace only cards
-                    //  can be handled either here, or in the onActivityResult function of CardSetActivity. Take your pick.
-                    setResult( RESULT_CANCELED, replyIntent );
-                } else {
-                    String[] info = {mEditFront.getText().toString(),
-                                     mEditBack.getText().toString()};
+                String[] info = {mEditFront.getText().toString(),
+                                 mEditBack.getText().toString()};
 
-                    replyIntent.putExtra(EXTRA_REPLY, info);
-                    setResult(RESULT_OK, replyIntent);
-                }
-                // Don't know what finish() does. Sorry.
+                replyIntent.putExtra(EXTRA_REPLY, info);
+                setResult(RESULT_OK, replyIntent);
+
                 finish();
             }
         });

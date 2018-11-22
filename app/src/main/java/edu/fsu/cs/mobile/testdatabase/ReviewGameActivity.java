@@ -125,6 +125,7 @@ public class ReviewGameActivity extends AppCompatActivity {
                     //add to counter
                     correct_count++;
                     number_count++;
+                    //TODO: Add sound effects maybe? some kind of inidcator of a correct answer
                     if(indexes.isEmpty()){
                         stop = true;
                     }
@@ -132,7 +133,7 @@ public class ReviewGameActivity extends AppCompatActivity {
                 else{
                     //add to counter
                     //add correct index back into array
-                    if(correct!=999) {
+                    if(correct!=999) { //TODO: is it possible to not need 999 here, i wanna find out
                         number_count++;
                         indexes.add(correct);
                     }

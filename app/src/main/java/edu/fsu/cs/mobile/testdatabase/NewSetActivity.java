@@ -25,16 +25,12 @@ public class NewSetActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent replyIntent = new Intent();
-                if (mEditSet.getText().toString().trim().length() == 0) {
-                //TODO: Error checking here is generally chaotic. Can't have whitespace only setNames or duplicates
-                //  can be handled either here, or in the onActivityResult function of main. Take your pick.
-                    setResult( RESULT_CANCELED, replyIntent );
-                } else {
-                    String info = mEditSet.getText().toString();
 
-                    replyIntent.putExtra(EXTRA_REPLY, info);
-                    setResult(RESULT_OK, replyIntent);
-                }
+                String info = mEditSet.getText().toString();
+
+                replyIntent.putExtra(EXTRA_REPLY, info);
+                setResult(RESULT_OK, replyIntent);
+
                 finish();
             }
         });

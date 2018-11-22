@@ -28,6 +28,7 @@ public class DeleteCardsActivity extends AppCompatActivity implements DeleteCard
     CardViewModel mCardViewModel;
     DeleteCardsAdapter adapter;
     public static final int DELETE_CARDS_ACTIVITY_RESULT_CODE = 1;
+    public static final String EXTRA_REPLY = "com.android.cardlistsql.REPLY";
     protected static ArrayList<Boolean> delete_states;
 
     @Override
@@ -47,13 +48,18 @@ public class DeleteCardsActivity extends AppCompatActivity implements DeleteCard
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int num_deleted = 0;
                 for( int i = delete_states.size() - 1; i >= 0; i--){
                     if( delete_states.get(i) ) {
                         mCardViewModel.deleteCard(adapter.getCardAt(i).getId());
                         CardSetActivity.flip_states.remove(i);
+                        num_deleted++;
                     }
                 }
-                setResult(RESULT_OK);
+
+                Intent replyIntent = new Intent();
+                replyIntent.putExtra(EXTRA_REPLY, num_deleted);
+                setResult(RESULT_OK, replyIntent);
                 finish();
             }
         });
