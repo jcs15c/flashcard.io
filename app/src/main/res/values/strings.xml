@@ -15,4 +15,9 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="edit_cards">Edit Cards</string>
+    <string name="explore_set">Explore Set</string>
+    <string name="review_game">Review Game</string>
+    <string name="rename_set">Rename Set</string>
+    <string name="delete_set">Delete Set</string>
+    <string name="clone_set">Clone Set</string>
 </resources>

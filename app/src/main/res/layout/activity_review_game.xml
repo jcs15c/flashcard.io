@@ -27,7 +27,6 @@
         android:layout_height="32dp"
         android:layout_alignParentTop="false"
         android:layout_centerHorizontal="true"
-        android:background="@color/light_blue"
         android:gravity="center"
         android:shadowDx="1"
         android:shadowDy="1"

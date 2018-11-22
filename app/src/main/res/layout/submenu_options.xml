@@ -12,8 +12,6 @@
             style="?android:attr/buttonBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             android:stretchColumns="*">
 
             <TableRow
@@ -26,14 +24,16 @@
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Explore Set" />
+                    android:text="@string/explore_set"
+                    android:textColor="@color/colorPrimary" />
 
                 <Button
                     android:id="@+id/submenu_review"
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Review Game" />
+                    android:text="@string/review_game"
+                    android:textColor="@color/colorPrimary" />
             </TableRow>
 
             <TableRow
@@ -46,14 +46,16 @@
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Rename Set" />
+                    android:text="@string/rename_set"
+                    android:textColor="@color/colorPrimary" />
 
                 <Button
                     android:id="@+id/submenu_delete"
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Delete Set" />
+                    android:text="@string/delete_set"
+                    android:textColor="@color/colorPrimary" />
             </TableRow>
 
             <TableRow
@@ -66,7 +68,8 @@
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Clone Set" />
+                    android:text="@string/clone_set"
+                    android:textColor="@color/colorPrimary" />
             </TableRow>
 
         </TableLayout>

@@ -3,6 +3,8 @@ package edu.fsu.cs.mobile.testdatabase;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,9 +40,11 @@ public class SetNameAdapter extends RecyclerView.Adapter<SetNameAdapter.ViewHold
             holder.myTextView.setText(current);
 
             if( position == MainActivity.selectedPosition )
-                holder.myTextView.setBackgroundColor(Color.parseColor("#99d9e9"));
+                //Color.parseColor("#99d9e9")
+                holder.myTextView.setBackgroundResource(R.color.selected_set);
             else
-                holder.myTextView.setBackgroundColor(Color.parseColor("#C6C6C6"));
+                holder.myTextView.setBackgroundResource(R.color.card_color);
+
         } else {
             holder.myTextView.setText("No Sets!");
         }
@@ -53,19 +57,29 @@ public class SetNameAdapter extends RecyclerView.Adapter<SetNameAdapter.ViewHold
         else return 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView myTextView;
 
         ViewHolder( View itemView ) {
             super(itemView);
             myTextView = itemView.findViewById(R.id.set_grid_item);
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
         public void onClick( View view ) {
-            if (mClickListener != null )
+            if (mClickListener != null ) {
                 mClickListener.onItemClick( view, getAdapterPosition());
+            }
+        }
+
+        @Override
+        public boolean onLongClick( View view ) {
+            if (mClickListener != null ) {
+                mClickListener.onLongClick( view, getAdapterPosition());
+            }
+            return true;
         }
     }
 
@@ -75,6 +89,7 @@ public class SetNameAdapter extends RecyclerView.Adapter<SetNameAdapter.ViewHold
 
     public interface ItemClickListener {
         void onItemClick( View view, int position );
+        void onLongClick( View view, int position );
     }
 
     void setNames(List<String> strings) {

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="175dp"
     android:padding="5dp">
@@ -8,9 +10,13 @@
         android:id="@+id/card_grid_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/flash_card_image"
+        android:background="@drawable/flash_card_image_pale"
         android:fontFamily="sans-serif-black"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="24sp" />
+        app:autoSizeTextType="uniform"
+        app:autoSizeMinTextSize="8sp"
+        app:autoSizeMaxTextSize="24sp"
+        app:autoSizeStepGranularity="2sp"
+        tools:ignore="MissingPrefix"/>
 </LinearLayout>

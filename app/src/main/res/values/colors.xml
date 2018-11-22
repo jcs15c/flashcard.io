@@ -3,10 +3,17 @@
     <color name="cardColor">#c6c6c6</color>
     <color name="deleteCardColor">#D8B6B6</color>
     <color name="darkCardColor">#afafaf</color>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="buttonLabel">#d3d3d3</color>
-    <color name="light_blue">#cdfffc</color>
-    <color name="darkBackground">#d1d1d1</color>
+
+
+    <color name="delete_mode">#b92f2f</color>
+    <color name="edit_mode">#008c05</color>
+    <color name="colorPrimary">#3f51b5</color>
+    <color name="colorPrimaryDark">#303f9f</color>
+    <color name="selected_set">#cdfffc</color>
+    <color name="card_color">#ffffff</color>
+    <color name="dark_background">#efefef</color>
+    <color name="menu_background">#fafafa</color>
+    <color name="fab_color">#cdfffc</color>
 </resources>

@@ -28,6 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.fsu.cs.mobile.testdatabase.Database.Card;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
     protected static int selectedPosition = -1;
 
     boolean darkModeOn;
+
     //private String newSetName = "";
 
     @Override
@@ -78,6 +80,9 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //TODO: Maybe try to get this working? the logo is cool, i wanna try and put it on the toolbar
+        //getSupportActionBar().setIcon(R.drawable.icon);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -229,6 +234,19 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
 
         selectedPosition = position;
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onLongClick(View view, int position ) {
+        findViewById(R.id.text_hint).setVisibility(View.INVISIBLE);
+        findViewById(R.id.submenu_table).setVisibility(View.VISIBLE);
+
+        selectedPosition = position;
+        adapter.notifyDataSetChanged();
+
+        Intent exploreIntent = new Intent( MainActivity.this, CardSetActivity.class);
+        exploreIntent.putExtra(EXTRA_MESSAGE, adapter.getNameFromPosition(position));
+        startActivityForResult(exploreIntent, CARD_SET_ACTIVITY_REQUEST_CODE);
     }
 
     // This is definitely written poorly, I wasn't sure how to do the error checking

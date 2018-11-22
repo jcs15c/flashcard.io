@@ -17,6 +17,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import edu.fsu.cs.mobile.testdatabase.Database.Card;
@@ -37,13 +40,13 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
     //      separate ViewModel. I don't know if this is bad, but if we have memory problems
     //      down the line, check this first.
     private CardViewModel mCardViewModel;
+    protected static ArrayList<Boolean> flip_states;
     CardListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_set);
-
         // Receive the data from the MainActivity in order to only display cards from one set.
         Intent data = getIntent();
         String info = data.getStringExtra(MainActivity.EXTRA_MESSAGE);
@@ -72,6 +75,8 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
         boolean includeEdge = true;
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(numberOfColumns, spacing, includeEdge));
 
+
+
         adapter = new CardListAdapter(this);
 
         mCardViewModel = ViewModelProviders.of(this).get(CardViewModel.class);
@@ -81,6 +86,13 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
                 adapter.setCards(cards);
             }
         });
+
+        // Initialize array of "flipness", noting all cards face up at start.
+        // I wish there was a way to not do this, but i cant find it.
+        flip_states = new ArrayList<>();
+        for( int i = 0; i < mCardViewModel.countCardSet(info) - 1; i++ ) {
+            flip_states.add(Boolean.FALSE);
+        }
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
@@ -99,6 +111,7 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
             String[] info = data.getStringArrayExtra(NewCardActivity.EXTRA_REPLY);
             Card card = new Card(setName, info[0], info[1]);
             mCardViewModel.insertCard(card);
+            flip_states.add(Boolean.FALSE);
         }
         else if( requestCode == NEW_CARD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_CANCELED ){
             Toast.makeText(
@@ -108,23 +121,10 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
         }
     }
 
-    // This is probably very bad practice, kinda defeating the point of the adapter in the first place.
-    //      Should really be changed so that the adapter handles this function.
-    //      Probably still pretty inefficient, even without this concern.
-    //  In practice, all it does is "flip" the flashcard.
     @Override
     public void onItemClick(View view, int position ) {
-        RecyclerView recyclerView = findViewById(R.id.setrecyclerview);
-        RecyclerView.ViewHolder holder = recyclerView.findViewHolderForAdapterPosition(position);
-        TextView textView = holder.itemView.findViewById(R.id.card_grid_item);
-
-        String currentBack = adapter.getCardAt(position).getBack();
-        String currentFront = adapter.getCardAt(position).getFront();
-
-        if ( currentFront.equals(textView.getText()) )
-            textView.setText(currentBack);
-        else
-            textView.setText(currentFront);
+        adapter.flipCard(position);
+        adapter.notifyDataSetChanged();
     }
 
     @Override

@@ -12,7 +12,8 @@
         <LinearLayout
             android:id="@+id/submenu_table"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <Button
@@ -20,7 +21,8 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Explore Set" />
+                android:text="@string/explore_set"
+                android:textColor="@color/colorPrimary" />
 
             <Button
                 android:id="@+id/submenu_review"
@@ -28,28 +30,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="0dp"
-                android:text="Review Game" />
+                android:text="@string/review_game"
+                android:textColor="@color/colorPrimary" />
 
             <Button
                 android:id="@+id/submenu_rename"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Rename Set" />
+                android:text="@string/rename_set"
+                android:textColor="@color/colorPrimary" />
 
             <Button
                 android:id="@+id/submenu_delete"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Delete Set" />
+                android:text="@string/delete_set"
+                android:textColor="@color/colorPrimary" />
 
             <Button
                 android:id="@+id/submenu_clone"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Clone Set" />
+                android:text="@string/clone_set"
+                android:textColor="@color/colorPrimary" />
 
         </LinearLayout>
     </ScrollView>

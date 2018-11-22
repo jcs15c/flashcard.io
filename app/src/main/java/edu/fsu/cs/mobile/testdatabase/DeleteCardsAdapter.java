@@ -18,13 +18,13 @@ import edu.fsu.cs.mobile.testdatabase.Database.Card;
 
 // The adapter that makes the RecyclerView "easier" to handle. Much of this is beyond what I
 //      understand, particularly the part with inflaters.
-public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHolder> {
+public class DeleteCardsAdapter extends RecyclerView.Adapter<DeleteCardsAdapter.ViewHolder> {
     private final LayoutInflater mInflater;
     private List<Card> mCards;
 
     private ItemClickListener mClickListener;
 
-    CardListAdapter(Context context) {
+    DeleteCardsAdapter(Context context) {
         this.mInflater = LayoutInflater.from(context);
     }
 
@@ -39,14 +39,13 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (mCards != null) {
             Card current = mCards.get(position);
-            if( !CardSetActivity.flip_states.get(position) ) {
-                holder.myTextView.setText(current.getFront());
+            holder.myTextView.setText(current.getFront());
+            if( !DeleteCardsActivity.delete_states.get(position) ) {
                 holder.myTextView.setBackgroundResource(R.drawable.flash_card_image_pale);
             }
             else {
-                holder.myTextView.setText(current.getBack());
-                holder.myTextView.setBackgroundResource(R.drawable.flash_card_dark_pale);            }
-
+                holder.myTextView.setBackgroundResource(R.drawable.flash_card_red_pale);
+            }
         } else {
             // I dont know how this would be called
             holder.myTextView.setText("No Cards");
@@ -85,12 +84,15 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
     }
 
     void setCards(List<Card> cards) {
+        //Log.d("TAG", String.valueOf(getItemCount()));
+        Log.d("TAG2", "COUNT CARDS");
+
         mCards = cards;
         notifyDataSetChanged();
     }
 
-    public void flipCard( int pos ){
-        CardSetActivity.flip_states.set(pos, !CardSetActivity.flip_states.get(pos));
+    public void flipState( int pos ){
+        DeleteCardsActivity.delete_states.set(pos, !DeleteCardsActivity.delete_states.get(pos));
     }
 
     // This function may be bad practice, but I don't know enough one way or another.
@@ -98,7 +100,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
     //       makes the adapter responsible for changing the text on the grid, not the activity.
     //TODO: Replace with a "flipCard" method so that CardSetActivity isnt responsible for the logic
     public List<Card> getCards() {
-             return mCards;
+        return mCards;
     }
 
     public Card getCardAt(int pos) {
