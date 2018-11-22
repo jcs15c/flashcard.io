@@ -10,9 +10,4 @@
         android:title="@string/delete_cards"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/edit_cards"
-        android:orderInCategory="100"
-        android:title="@string/edit_cards"
-        app:showAsAction="never" />
 </menu>

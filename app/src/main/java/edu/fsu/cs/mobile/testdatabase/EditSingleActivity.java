@@ -3,6 +3,7 @@ package edu.fsu.cs.mobile.testdatabase;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -21,10 +22,10 @@ public class EditSingleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_card);
+        setContentView(R.layout.activity_edit_single);
 
         Intent data = getIntent();
-        String[] info = data.getStringArrayExtra(EditCardsActivity.EXTRA_SINGLE);
+        String[] info = data.getStringArrayExtra(CardSetActivity.EXTRA_SINGLE);
 
         mEditFront = findViewById(R.id.edit_front);
         mEditBack = findViewById(R.id.edit_back);

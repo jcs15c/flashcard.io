@@ -60,19 +60,27 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         else return 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView myTextView;
 
         ViewHolder(View itemView) {
             super(itemView);
             myTextView = itemView.findViewById(R.id.card_grid_item);
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             if (mClickListener != null)
                 mClickListener.onItemClick(view, getAdapterPosition());
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            if (mClickListener != null)
+                mClickListener.onLongClick(view, getAdapterPosition());
+            return true;
         }
 
     }
@@ -82,6 +90,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
 
     public interface ItemClickListener {
         void onItemClick(View view, int position);
+        void onLongClick(View view, int position);
     }
 
     void setCards(List<Card> cards) {
@@ -91,14 +100,6 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
 
     public void flipCard( int pos ){
         CardSetActivity.flip_states.set(pos, !CardSetActivity.flip_states.get(pos));
-    }
-
-    // This function may be bad practice, but I don't know enough one way or another.
-    // We should probably change this so that there's a single function 'flipCard' that
-    //       makes the adapter responsible for changing the text on the grid, not the activity.
-    //TODO: Replace with a "flipCard" method so that CardSetActivity isnt responsible for the logic
-    public List<Card> getCards() {
-             return mCards;
     }
 
     public Card getCardAt(int pos) {

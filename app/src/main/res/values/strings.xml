@@ -20,4 +20,5 @@
     <string name="rename_set">Rename Set</string>
     <string name="delete_set">Delete Set</string>
     <string name="clone_set">Clone Set</string>
+    <string name="confirm_edit">Confirm Edit</string>
 </resources>

@@ -33,7 +33,9 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
     public static final String EXTRA_DELETE = "com.android.cardlistsql.DELETE";
     public static final String EXTRA_EDIT= "com.android.cardlistsql.EDIT";
     public static final int NEW_CARD_ACTIVITY_REQUEST_CODE = 1;
-    public static final int DELETE_CARDS_ACTIVITY_REQUEST_CODE = 1;
+    public static final int DELETE_CARDS_ACTIVITY_REQUEST_CODE = 2;
+    public static final int EDIT_SINGLE_ACTIVITY_REQUEST_CODE = 3;
+    public static final String EXTRA_SINGLE = "com.android.cardlistsql.SINGLE";
 
 
     // This could be a potential memory issue; both this and the main activity each have a
@@ -42,6 +44,7 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
     private CardViewModel mCardViewModel;
     protected static ArrayList<Boolean> flip_states;
     CardListAdapter adapter;
+    private int edit_pos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +57,7 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if( info != null )
-            getSupportActionBar().setTitle( info );
+        getSupportActionBar().setTitle( info );
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -119,12 +121,33 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
                     R.string.empty_not_saved,
                     Toast.LENGTH_LONG).show();
         }
+        else if( requestCode == EDIT_SINGLE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK ){
+            Card theCard = adapter.getCardAt(edit_pos);
+
+            String[] newInfo = data.getStringArrayExtra(EditSingleActivity.EXTRA_REPLY);
+            theCard.setFront(newInfo[0]);
+            theCard.setBack(newInfo[1]);
+            mCardViewModel.updateCard(theCard);
+        }
     }
 
     @Override
     public void onItemClick(View view, int position ) {
         adapter.flipCard(position);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onLongClick(View view, int position ) {
+        edit_pos = position;
+        Card theCard = adapter.getCardAt(position);
+
+        Intent intent = new Intent( CardSetActivity.this, EditSingleActivity.class);
+        String[] info = {theCard.getFront(),
+                         theCard.getBack()};
+
+        intent.putExtra(EXTRA_SINGLE, info);
+        startActivityForResult(intent, EDIT_SINGLE_ACTIVITY_REQUEST_CODE);
     }
 
     @Override
@@ -139,14 +162,6 @@ public class CardSetActivity extends AppCompatActivity implements CardListAdapte
             Intent deleteIntent = new Intent(CardSetActivity.this, DeleteCardsActivity.class);
             deleteIntent.putExtra( EXTRA_DELETE, data.getStringExtra(MainActivity.EXTRA_MESSAGE) );
             startActivity( deleteIntent );
-            overridePendingTransition(0,0); // To skip animation
-            return true;
-        }
-
-        if (id == R.id.edit_cards) {
-            Intent editIntent = new Intent(CardSetActivity.this, EditCardsActivity.class);
-            editIntent.putExtra( EXTRA_EDIT, data.getStringExtra(MainActivity.EXTRA_MESSAGE) );
-            startActivity( editIntent );
             overridePendingTransition(0,0); // To skip animation
             return true;
         }
