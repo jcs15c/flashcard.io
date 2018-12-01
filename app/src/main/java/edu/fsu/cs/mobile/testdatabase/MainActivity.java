@@ -13,6 +13,8 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+
+
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -150,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
                     startActivity(reviewIntent);
                 }
                 else
-                    showSnackbar("Error: Insufficient cards to start review game.");
+                    showSnackbar("Error: Insufficient cards to start review game");
             }
         });
 
@@ -173,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
                         dialog.dismiss();
                         String newSetName = input.getText().toString();
                         if ( newSetName.trim().length() == 0 ) {
-                            showSnackbar("Error: Set cannot be empty.");
+                            showSnackbar("Error: Set cannot be empty");
                         } else if ( adapter.cardNamesContains(newSetName) ) {
                             showSnackbar("Error: Set names must be unique");
                         }
@@ -225,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
                 List<Card> new_cards = mCardViewModel.getStaticSet( adapter.getNameFromPosition(selectedPosition) );
                 String thisSetName = adapter.getNameFromPosition(selectedPosition) + " - Copy";
                 if ( adapter.cardNamesContains(thisSetName) ) {
-                    showSnackbar("Error: Copy already exists.");
+                    showSnackbar("Error: Copy already exists");
                 } else {
                     mCardViewModel.insertSet(thisSetName);
                     for (Card C : new_cards) {
@@ -271,7 +273,7 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
 
                 String setName = data.getStringExtra(NewCardActivity.EXTRA_REPLY);
                 if ( setName.trim().length() == 0 ) {
-                    showSnackbar("Error: Set name cannot be empty.");
+                    showSnackbar("Error: Set name cannot be empty");
                 } else if ( adapter.cardNamesContains(setName) ) {
                     showSnackbar("Error: Set names must be unique");
                 }
@@ -301,7 +303,7 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
         }
 
         if (id == R.id.count_settings) {
-            showSnackbar(Integer.toString(mCardViewModel.countAllCards()) + " cards total.");
+            showSnackbar(Integer.toString(mCardViewModel.countAllCards()) + " cards total");
             return true;
         }
 

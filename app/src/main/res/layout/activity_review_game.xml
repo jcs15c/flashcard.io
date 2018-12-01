@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/menu_background">
+    android:background="?attr/backgroundcolor">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -28,7 +28,8 @@
         android:layout_height="32dp"
         android:layout_alignParentTop="false"
         android:layout_centerHorizontal="true"
-        android:background="@color/dark_background"
+        android:background="?attr/backgroundcolor"
+        android:textColor="?attr/textcolor"
         android:gravity="center"
         android:shadowDx="1"
         android:shadowDy="1"
@@ -88,7 +89,8 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@color/dark_background"
+                android:background="?attr/cardbackground"
+                android:textColor="?attr/tintcolor"
                 android:padding="0dp"
                 android:text="front1"
                 app:autoSizeMaxTextSize="24sp"
@@ -97,7 +99,6 @@
                 app:autoSizeTextType="uniform"
                 android:textAlignment="center"
                 android:textAllCaps="false"
-                android:textColor="@color/colorPrimary"
                 tools:ignore="MissingPrefix" />
 
             <Button
@@ -105,7 +106,8 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@color/dark_background"
+                android:background="?attr/cardbackground"
+                android:textColor="?attr/tintcolor"
                 android:padding="0dp"
                 android:text="front2"
                 app:autoSizeMaxTextSize="24sp"
@@ -114,7 +116,6 @@
                 app:autoSizeTextType="uniform"
                 android:textAlignment="center"
                 android:textAllCaps="false"
-                android:textColor="@color/colorPrimary"
                 tools:ignore="MissingPrefix" />
 
         </TableRow>
@@ -132,7 +133,8 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@color/dark_background"
+                android:background="?attr/cardbackground"
+                android:textColor="?attr/tintcolor"
                 android:padding="0dp"
                 android:text="front3"
                 app:autoSizeMaxTextSize="24sp"
@@ -141,7 +143,6 @@
                 app:autoSizeTextType="uniform"
                 android:textAlignment="center"
                 android:textAllCaps="false"
-                android:textColor="@color/colorPrimary"
                 tools:ignore="MissingPrefix" />
 
             <Button
@@ -149,7 +150,8 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@color/dark_background"
+                android:background="?attr/cardbackground"
+                android:textColor="?attr/tintcolor"
                 android:backgroundTintMode="screen"
                 android:padding="0dp"
                 android:text="front4"
@@ -159,7 +161,6 @@
                 app:autoSizeTextType="uniform"
                 android:textAlignment="center"
                 android:textAllCaps="false"
-                android:textColor="@color/colorPrimary"
                 tools:ignore="MissingPrefix" />
 
         </TableRow>
@@ -174,7 +175,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@color/fab_color"
+        android:background="@color/colorAccent"
         android:text="Go Back"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/review_fronts"

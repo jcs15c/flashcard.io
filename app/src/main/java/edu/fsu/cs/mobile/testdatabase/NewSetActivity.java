@@ -1,6 +1,8 @@
 package edu.fsu.cs.mobile.testdatabase;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,7 +18,14 @@ public class NewSetActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
+
+        SharedPreferences settings = getSharedPreferences("MySettings", Context.MODE_PRIVATE);
+        boolean darkModeOn = settings.getBoolean("dark_mode", false);
+        if(darkModeOn)
+            setTheme(R.style.DarkTheme);
+        else
+            setTheme(R.style.AppTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_set);
         mEditSet = findViewById(R.id.edit_set);
