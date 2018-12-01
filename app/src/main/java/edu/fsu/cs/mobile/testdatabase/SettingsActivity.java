@@ -75,10 +75,16 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void restartApp() {
-        Intent myIntent = new Intent(getApplicationContext(),SettingsActivity.class);
+        /*Intent myIntent = new Intent(getApplicationContext(),SettingsActivity.class);
         startActivity(myIntent);
         overridePendingTransition(0,0); // To skip animation
-        finish();
+        finish();*/
+
+        //True restart of app
+        Intent i = getBaseContext().getPackageManager()
+                .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
     }
 
 

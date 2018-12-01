@@ -5,7 +5,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="?attr/cardbackground">
 
         <TableLayout
             android:id="@+id/submenu_table"
@@ -25,7 +26,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/explore_set"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="?attr/tintcolor" />
 
                 <Button
                     android:id="@+id/submenu_review"
@@ -33,7 +34,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/review_game"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="?attr/tintcolor" />
             </TableRow>
 
             <TableRow
@@ -47,7 +48,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/rename_set"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="?attr/tintcolor" />
 
                 <Button
                     android:id="@+id/submenu_delete"
@@ -55,7 +56,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/delete_set"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="?attr/tintcolor" />
             </TableRow>
 
             <TableRow
@@ -69,7 +70,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/clone_set"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="?attr/tintcolor" />
             </TableRow>
 
         </TableLayout>

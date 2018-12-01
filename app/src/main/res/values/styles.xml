@@ -7,10 +7,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="backgroundcolor">#fcfcfc </item>
+        <item name="backgroundcolor">#efefef </item>
         <item name="cardbackground">#ffffff </item>
-        <item name="textcolor">#808080 </item>
-        <item name="tintcolor">#000000 </item>
+        <item name="textcolor">#202020</item>
+        <item name="tintcolor">#3f51b5 </item>
         <item name="buttoncolor">#2196F3 </item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
