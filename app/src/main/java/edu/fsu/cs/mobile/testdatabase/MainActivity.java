@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -26,7 +27,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,10 +150,7 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
                     startActivity(reviewIntent);
                 }
                 else
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "Too few cards for review game",
-                            Toast.LENGTH_LONG).show();
+                    showSnackbar("Error: Insufficient cards to start review game.");
             }
         });
 
@@ -176,15 +173,9 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
                         dialog.dismiss();
                         String newSetName = input.getText().toString();
                         if ( newSetName.trim().length() == 0 ) {
-                            Toast.makeText(
-                                    getApplicationContext(),
-                                    "Set name cannot be empty",
-                                    Toast.LENGTH_LONG).show();
+                            showSnackbar("Error: Set cannot be empty.");
                         } else if ( adapter.cardNamesContains(newSetName) ) {
-                            Toast.makeText(
-                                    getApplicationContext(),
-                                    "Set names must be unique",
-                                    Toast.LENGTH_LONG).show();
+                            showSnackbar("Error: Set names must be unique");
                         }
                         else {
                             mCardViewModel.renameSet(adapter.getNameFromPosition(selectedPosition), newSetName);
@@ -234,10 +225,7 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
                 List<Card> new_cards = mCardViewModel.getStaticSet( adapter.getNameFromPosition(selectedPosition) );
                 String thisSetName = adapter.getNameFromPosition(selectedPosition) + " - Copy";
                 if ( adapter.cardNamesContains(thisSetName) ) {
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "Copy already exists",
-                            Toast.LENGTH_LONG).show();
+                    showSnackbar("Error: Copy already exists.");
                 } else {
                     mCardViewModel.insertSet(thisSetName);
                     for (Card C : new_cards) {
@@ -283,15 +271,9 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
 
                 String setName = data.getStringExtra(NewCardActivity.EXTRA_REPLY);
                 if ( setName.trim().length() == 0 ) {
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "Set name cannot be empty",
-                            Toast.LENGTH_LONG).show();
+                    showSnackbar("Error: Set name cannot be empty.");
                 } else if ( adapter.cardNamesContains(setName) ) {
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "Set names must be unique",
-                            Toast.LENGTH_LONG).show();
+                    showSnackbar("Error: Set names must be unique");
                 }
                 else {
                     mCardViewModel.insertSet(setName);
@@ -319,10 +301,7 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
         }
 
         if (id == R.id.count_settings) {
-            Toast.makeText(
-                    getApplicationContext(),
-                    Integer.toString(mCardViewModel.countAllCards()),
-                    Toast.LENGTH_LONG).show();
+            showSnackbar(Integer.toString(mCardViewModel.countAllCards()) + " cards total.");
             return true;
         }
 
@@ -338,6 +317,13 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showSnackbar(final String text) {
+        View container = findViewById(R.id.include);
+        if (container != null) {
+            Snackbar.make(container, text, Snackbar.LENGTH_LONG).show();
+        }
     }
 
     private void addTestData() {
