@@ -14,6 +14,7 @@ import android.widget.EditText;
 // Activity to add a user-inputted card to the database
 public class NewCardActivity extends AppCompatActivity {
     public static final String EXTRA_REPLY = "com.android.cardlistsql.REPLY";
+    public static final int OCR_ACTIVITYY_REQUEST_CODE = 0;
     private EditText mEditFront, mEditBack;
 
     @Override
@@ -34,9 +35,7 @@ public class NewCardActivity extends AppCompatActivity {
         scanButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent cameraIntent = new Intent(NewCardActivity.this, OCRActivity.class);
-                startActivity(cameraIntent);
-
-                finish();
+                startActivityForResult(cameraIntent, OCR_ACTIVITYY_REQUEST_CODE);
             }
         });
 
@@ -55,15 +54,17 @@ public class NewCardActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        if(bundle != null){
-            mEditFront.setText(bundle.getString("editFront"));
-            mEditBack.setText(bundle.getString("editBack"));
+    public void onActivityResult( int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        String[] cardData = data.getStringArrayExtra(OCRActivity.EXTRA_REPLY);
+
+        if( requestCode == OCR_ACTIVITYY_REQUEST_CODE ) {
+            if( resultCode == RESULT_OK ) {
+                mEditFront.setText( cardData[0] );
+                mEditBack.setText( cardData[1] );
+            }
         }
     }
+
 }

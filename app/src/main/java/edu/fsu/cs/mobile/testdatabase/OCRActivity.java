@@ -26,6 +26,8 @@ import java.io.IOException;
 
 public class OCRActivity extends AppCompatActivity {
 
+    public static final String EXTRA_REPLY = "com.android.cardlistsql.REPLY";
+
     SurfaceView mCameraView;
     TextView currentText,
              frontText,
@@ -35,8 +37,8 @@ public class OCRActivity extends AppCompatActivity {
     CameraSource mCameraSource;
     String frontTextString;
     String backTextString;
-    Bundle bundle = new Bundle();
 
+    String cardData[] = {"", ""};
 
     private String TAG = "OCRActivity";
     private int requestPermissionID = 101;
@@ -55,8 +57,6 @@ public class OCRActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ocr);
 
-        intent = new Intent(OCRActivity.this, NewCardActivity.class);
-
         mCameraView = findViewById(R.id.surfaceView);
 
         currentText = findViewById(R.id.scan_current);
@@ -68,21 +68,24 @@ public class OCRActivity extends AppCompatActivity {
         frontText.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                bundle.putString("editFront", frontTextString);
+                cardData[0] = frontTextString;
             }
         });
 
         backText.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                bundle.putString("editBack", backTextString);
+                Log.d("TAG", backTextString );
+                cardData[1] = backTextString;
             }
         });
 
         finishText.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                intent.putExtras(bundle);
-                startActivity(intent);
+                Intent replyIntent = new Intent();
+                replyIntent.putExtra(EXTRA_REPLY, cardData);
+                setResult(RESULT_OK, replyIntent);
+
                 finish();
             }
         });

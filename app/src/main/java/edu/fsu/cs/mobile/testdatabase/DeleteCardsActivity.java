@@ -2,7 +2,9 @@ package edu.fsu.cs.mobile.testdatabase;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
@@ -33,6 +35,14 @@ public class DeleteCardsActivity extends AppCompatActivity implements DeleteCard
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences settings = getSharedPreferences("MySettings", Context.MODE_PRIVATE);
+        boolean darkModeOn = settings.getBoolean("dark_mode", false);
+
+        if(darkModeOn)
+            setTheme(R.style.DarkTheme);
+        else
+            setTheme(R.style.AppTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_cards);
 
