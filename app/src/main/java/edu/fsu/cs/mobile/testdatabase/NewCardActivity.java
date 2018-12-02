@@ -14,7 +14,6 @@ import android.widget.EditText;
 // Activity to add a user-inputted card to the database
 public class NewCardActivity extends AppCompatActivity {
     public static final String EXTRA_REPLY = "com.android.cardlistsql.REPLY";
-
     private EditText mEditFront, mEditBack;
 
     @Override
@@ -31,6 +30,16 @@ public class NewCardActivity extends AppCompatActivity {
         mEditFront = findViewById(R.id.edit_front);
         mEditBack = findViewById(R.id.edit_back);
 
+        final Button scanButton = findViewById(R.id.camera_button);
+        scanButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent cameraIntent = new Intent(NewCardActivity.this, OCRActivity.class);
+                startActivity(cameraIntent);
+
+                finish();
+            }
+        });
+
         final Button button = findViewById(R.id.button_save);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -44,5 +53,17 @@ public class NewCardActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if(bundle != null){
+            mEditFront.setText(bundle.getString("editFront"));
+            mEditBack.setText(bundle.getString("editBack"));
+        }
     }
 }

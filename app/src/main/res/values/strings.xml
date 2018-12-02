@@ -21,4 +21,8 @@
     <string name="delete_set">Delete Set</string>
     <string name="clone_set">Clone Set</string>
     <string name="confirm_edit">Confirm Edit</string>
+    <string name="current_text">No String Detected</string>
+    <string name="scan_front">Scan Front</string>
+    <string name="scan_back">Scan Back</string>
+    <string name="scan_finish">Finish</string>
 </resources>
