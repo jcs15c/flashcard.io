@@ -4,20 +4,6 @@
     tools:context="edu.fsu.cs.mobile.basicactivity.MainActivity">
 
     <item
-        android:id="@+id/delete_all_cards"
-        android:orderInCategory="100"
-        android:title="@string/delete_settings"
-        android:textColor="?attr/textcolor"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/count_settings"
-        android:orderInCategory="100"
-        android:title="@string/count_settings"
-        android:textColor="?attr/textcolor"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/add_demo_cards"
         android:orderInCategory="100"
         android:title="@string/add_demo_cards"

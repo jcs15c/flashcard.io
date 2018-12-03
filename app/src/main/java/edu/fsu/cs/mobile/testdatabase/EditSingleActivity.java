@@ -14,9 +14,12 @@ import android.widget.EditText;
 
 import edu.fsu.cs.mobile.testdatabase.Database.Card;
 
+import static edu.fsu.cs.mobile.testdatabase.NewCardActivity.OCR_ACTIVITY_REQUEST_CODE;
+
 // Activity to add a user-inputted card to the database
 public class EditSingleActivity extends AppCompatActivity {
     public static final String EXTRA_REPLY = "com.android.cardlistsql.REPLY";
+    public static final int OCR_ACTIVITY_REQUEST_CODE = 0;
 
     private EditText mEditFront, mEditBack;
 
@@ -43,6 +46,14 @@ public class EditSingleActivity extends AppCompatActivity {
         mEditFront.setText(info[0]);
         mEditBack.setText(info[1]);
 
+        final Button scanButton = findViewById(R.id.camera_button);
+        scanButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent cameraIntent = new Intent(EditSingleActivity.this, OCRActivity.class);
+                startActivityForResult(cameraIntent, OCR_ACTIVITY_REQUEST_CODE);
+            }
+        });
+
         final Button button = findViewById(R.id.button_save);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -62,4 +73,17 @@ public class EditSingleActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void onActivityResult( int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        String[] cardData = data.getStringArrayExtra(OCRActivity.EXTRA_REPLY);
+
+        if( requestCode == OCR_ACTIVITY_REQUEST_CODE ) {
+            if( resultCode == RESULT_OK ) {
+                mEditFront.setText( cardData[0] );
+                mEditBack.setText( cardData[1] );
+            }
+        }
+    }
+
 }

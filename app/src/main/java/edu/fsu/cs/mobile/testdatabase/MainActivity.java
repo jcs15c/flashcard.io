@@ -71,14 +71,16 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
         setContentView(R.layout.activity_main);
 
         RelativeLayout subMenu = findViewById(R.id.subMenu);
-        getLayoutInflater().inflate(R.layout.text_hint, subMenu, true);
         getLayoutInflater().inflate(R.layout.submenu_options, subMenu, true);
+        getLayoutInflater().inflate(R.layout.text_hint, subMenu, true);
         setupSubmenuButtons(); //Only initialize buttons after they're added to layout
 
         if( selectedPosition == -1 ) // If there is no selected set
             findViewById(R.id.submenu_table).setVisibility(View.INVISIBLE);
         else //If a set has been selected
             findViewById(R.id.text_hint).setVisibility(View.INVISIBLE);
+
+        Log.d("TAG", String.valueOf(findViewById(R.id.text_hint).getVisibility() == View.VISIBLE));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -288,24 +290,13 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        // Don't know exactly how this works, but each one of these 'if' blocks corresponds
-        //      to a single action in the menu.
-        if (id == R.id.delete_all_cards) {
-            mCardViewModel.deleteAllCards();
-            return true;
-        }
-
-        if (id == R.id.count_settings) {
-            showSnackbar(Integer.toString(mCardViewModel.countAllCards()) + " cards total");
-            return true;
-        }
 
         if (id == R.id.add_demo_cards) {
             addTestData();
@@ -329,22 +320,11 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
     }
 
     private void addTestData() {
+        mCardViewModel.insertCard(new Card("Stands", "", ""));
         mCardViewModel.insertCard(new Card("Animal Sounds", "", ""));
-        mCardViewModel.insertCard(new Card("Animal Sounds", "Cat", "Meow"));
-        mCardViewModel.insertCard(new Card("Animal Sounds", "Dog", "Woof"));
-        mCardViewModel.insertCard(new Card("Animal Sounds", "Cow", "Moo"));
-        mCardViewModel.insertCard(new Card("Animal Sounds", "Sheep", "Baa"));
-
         mCardViewModel.insertCard(new Card("Flowers", "", ""));
-        mCardViewModel.insertCard(new Card("Flowers", "Daisy", "White"));
-        mCardViewModel.insertCard(new Card("Flowers", "Rose", "Red"));
-        mCardViewModel.insertCard(new Card("Flowers", "Violet", "Purple"));
-
-        mCardViewModel.insertCard(new Card("Milk Kinds", "", ""));
-        mCardViewModel.insertCard(new Card("Milk Kinds", "Whole", "Gross"));
-        mCardViewModel.insertCard(new Card("Milk Kinds", "Chocolate", "Yum Yum"));
-        mCardViewModel.insertCard(new Card("Milk Kinds", "Skim", "Please no"));
-        mCardViewModel.insertCard(new Card("Milk Kinds", "Almond", "Not a cow"));
-        mCardViewModel.insertCard(new Card("Milk Kinds", "Half", "Not real Milk"));
+        mCardViewModel.insertCard(new Card("CMM Levels", "", ""));
+        mCardViewModel.insertCard(new Card("Software Engineering Code of Ethics", "", ""));
+        mCardViewModel.insertCard(new Card("Stands", "", ""));
     }
 }

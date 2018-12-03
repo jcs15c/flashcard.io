@@ -28,8 +28,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right|bottom"
-        android:layout_margin="8dp"
+        android:layout_margin="12dp"
         android:src="@drawable/ic_delete_black_24dp"
-        app:backgroundTint="?attr/colorAccent" />
+        app:backgroundTint="@color/colorAccent" />
 
 </android.support.design.widget.CoordinatorLayout>

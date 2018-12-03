@@ -10,5 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:text="Select a Flashcard set for options!" />
+        android:text="Select a Flashcard set for options!"
+        android:textColor="?attr/tintcolor"
+        android:textSize="14sp"
+        android:visibility="visible" />
 </RelativeLayout>
