@@ -4,13 +4,6 @@
     tools:context="edu.fsu.cs.mobile.basicactivity.MainActivity">
 
     <item
-        android:id="@+id/add_demo_cards"
-        android:orderInCategory="100"
-        android:title="@string/add_demo_cards"
-        android:textColor="?attr/textcolor"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/settings"
         android:orderInCategory="100"
         android:title="@string/settings"

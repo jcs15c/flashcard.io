@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+
+import edu.fsu.cs.mobile.testdatabase.Database.Card;
 
 public class SettingsActivity extends AppCompatActivity {
     private CardViewModel mCardViewModel;
@@ -82,6 +85,28 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        final Button demo_button = findViewById(R.id.demo_button);
+        demo_button.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
+                builder.setTitle("Do you want to add demo cards?");
+
+                builder.setPositiveButton("Add cards", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        addTestData();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
+            }
+        });
 
         nightSwitch.setChecked(darkModeOn);
         nightSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -121,6 +146,21 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    private void addTestData() {
+        Resources res = getResources();
+        String[] setNames = res.getStringArray(R.array.sets);
+        String[] fronts = res.getStringArray(R.array.fronts);
+        String[] backs = res.getStringArray(R.array.backs);
 
+        mCardViewModel.insertCard(new Card("Stands", "", ""));
+        mCardViewModel.insertCard(new Card("Animal Sounds", "", ""));
+        mCardViewModel.insertCard(new Card("Flowers", "", ""));
+        mCardViewModel.insertCard(new Card("CMM Levels", "", ""));
+        mCardViewModel.insertCard(new Card("Software Engineering Code of Ethics", "", ""));
+        mCardViewModel.insertCard(new Card("Software Life Cycle Models", "", ""));
+
+        for( int i = 0; i < setNames.length; i++)
+            mCardViewModel.insertCard(new Card(setNames[i], fronts[i], backs[i]));
+    }
 
 }

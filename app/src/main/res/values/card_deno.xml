@@ -1,155 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <?xml version="1.0" encoding="utf-8"?>
-    <resources>
-        <string-array
-            name="sets">
-            <item>Stands</item>
-            <item>Stands</item>
-            <item>Stands</item>
-            <item>Stands</item>
-            <item>Stands</item>
-            <item>Stands</item>
-            <item>Stands</item>
-            <item>Stands</item>
-            <item>Stands</item>
-            <item>Stands</item>
-            <item>Stands</item>
-            <item>Stands</item>
-            <item>Stands</item>
-            <item>Stands</item>
+    <string-array
+        name="sets">
+        <item>Stands</item>
+        <item>Stands</item>
+        <item>Stands</item>
+        <item>Stands</item>
+        <item>Stands</item>
+        <item>Stands</item>
+        <item>Stands</item>
+        <item>Stands</item>
+        <item>Stands</item>
+        <item>Stands</item>
+        <item>Stands</item>
+        <item>Stands</item>
+        <item>Stands</item>
+        <item>Stands</item>
 
-            <item>Animal Sounds</item>
-            <item>Animal Sounds</item>
-            <item>Animal Sounds</item>
-            <item>Animal Sounds</item>
+        <item>Animal Sounds</item>
+        <item>Animal Sounds</item>
+        <item>Animal Sounds</item>
+        <item>Animal Sounds</item>
 
-            <item>Flowers</item>
-            <item>Flowers</item>
-            <item>Flowers</item>
+        <item>Flowers</item>
+        <item>Flowers</item>
+        <item>Flowers</item>
 
-            <item>CMM Levels</item>
-            <item>CMM Levels</item>
-            <item>CMM Levels</item>
-            <item>CMM Levels</item>
-            <item>CMM Levels</item>
+        <item>CMM Levels</item>
+        <item>CMM Levels</item>
+        <item>CMM Levels</item>
+        <item>CMM Levels</item>
+        <item>CMM Levels</item>
 
-            <item>Software Engineering Code of Ethics</item>
-            <item>Software Engineering Code of Ethics</item>
-            <item>Software Engineering Code of Ethics</item>
-            <item>Software Engineering Code of Ethics</item>
-            <item>Software Engineering Code of Ethics</item>
-            <item>Software Engineering Code of Ethics</item>
-            <item>Software Engineering Code of Ethics</item>
-            <item>Software Engineering Code of Ethics</item>
+        <item>Software Engineering Code of Ethics</item>
+        <item>Software Engineering Code of Ethics</item>
+        <item>Software Engineering Code of Ethics</item>
+        <item>Software Engineering Code of Ethics</item>
+        <item>Software Engineering Code of Ethics</item>
+        <item>Software Engineering Code of Ethics</item>
+        <item>Software Engineering Code of Ethics</item>
+        <item>Software Engineering Code of Ethics</item>
 
-            <item>Software Life Cycle Models</item>
-            <item>Software Life Cycle Models</item>
-            <item>Software Life Cycle Models</item>
-            <item>Software Life Cycle Models</item>
-            <item>Software Life Cycle Models</item>
-            <item>Software Life Cycle Models</item>
-        </string-array>
-
-
-        <string-array
-            name="fronts">
-            <item>Jotaro Kujo</item>
-            <item>DIO Brando</item>
-            <item>Yoshikage Kira</item>
-            <item>Jean Pierre Polnareff</item>
-            <item>Giorno Giovanna</item>
-            <item>Guido Mista</item>
-            <item>Johnny Joestar</item>
-            <item>Hol Horse</item>
-            <item>Koichi Hirose</item>
-            <item>Bruno Bucciarati</item>
-            <item>Josuke Higashikata</item>
-            <item>Iggy</item>
-            <item>Okuyasu Nijimura</item>
-            <item>Rohan Kishibe</item>
-
-            <item>Cat</item>
-            <item>Dog</item>
-            <item>Cow</item>
-            <item>Sheep</item>
-
-            <item>Daisy</item>
-            <item>Rose</item>
-            <item>Violet</item>
-
-            <item>Level 1</item>
-            <item>Level 2</item>
-            <item>Level 3</item>
-            <item>Level 4</item>
-            <item>Level 5</item>
-
-            <item>Public</item>
-            <item>Client and Employer</item>
-            <item>Product</item>
-            <item>Judgment</item>
-            <item>Management</item>
-            <item>Profession</item>
-            <item>Colleagues</item>
-            <item>Self</item>
-
-            <item>Waterfall Model</item>
-            <item>Rapid-Prototyping Model</item>
-            <item>Open Source Model</item>
-            <item>Agile Process</item>
-            <item>Synchronize and Stabilize Model</item>
-            <item>Spiral Model</item>
-        </string-array>
+        <item>Software Life Cycle Models</item>
+        <item>Software Life Cycle Models</item>
+        <item>Software Life Cycle Models</item>
+        <item>Software Life Cycle Models</item>
+        <item>Software Life Cycle Models</item>
+        <item>Software Life Cycle Models</item>
+        <item>Software Life Cycle Models</item>
+        <item>Software Life Cycle Models</item>
+    </string-array>
 
 
-        <string-array
-            name="backs">
-            <item>Star Platinum</item>
-            <item>Za Warudo</item>
-            <item>Killer Queen</item>
-            <item>Silver Chariot</item>
-            <item>Golden Experience</item>
-            <item>Sex Pistols</item>
-            <item>Tusk</item>
-            <item>Emperor</item>
-            <item>Echoes</item>
-            <item>Sticky Fingers</item>
-            <item>Crazy Diamond</item>
-            <item>The Fool</item>
-            <item>The Hand</item>
-            <item>Heaven's Door</item>
+    <string-array
+        name="fronts">
+        <item>Jotaro Kujo</item>
+        <item>DIO Brando</item>
+        <item>Yoshikage Kira</item>
+        <item>Jean Pierre Polnareff</item>
+        <item>Giorno Giovanna</item>
+        <item>Guido Mista</item>
+        <item>Johnny Joestar</item>
+        <item>Hol Horse</item>
+        <item>Koichi Hirose</item>
+        <item>Bruno Bucciarati</item>
+        <item>Josuke Higashikata</item>
+        <item>Iggy</item>
+        <item>Okuyasu Nijimura</item>
+        <item>Rohan Kishibe</item>
 
-            <item>Meow</item>
-            <item>Woof</item>
-            <item>Moo</item>
-            <item>Baa</item>
+        <item>Cat</item>
+        <item>Dog</item>
+        <item>Cow</item>
+        <item>Sheep</item>
 
-            <item>White</item>
-            <item>Red</item>
-            <item>Purple</item>
+        <item>Daisy</item>
+        <item>Rose</item>
+        <item>Violet</item>
 
-            <item>Initial</item>
-            <item>Repeatable</item>
-            <item>Defined</item>
-            <item>Managed</item>
-            <item>Optimizing</item>
+        <item>Initial</item>
+        <item>Repeatable</item>
+        <item>Defined</item>
+        <item>Managed</item>
+        <item>Optimizing</item>
 
-            <item>Software engineers shall act consistently with the public interest.</item>
-            <item>Software engineers shall act in a manner that is in the best interests of their client and employer consistent with the public interest.</item>
-            <item>Software engineers shall ensure that their products and related modifications meet the highest professional standards possible.</item>
-            <item>Software engineers shall maintain integrity and independence in their professional judgment.</item>
-            <item>Software engineering managers and leaders shall subscribe to and promote an ethical approach to the management of software development and maintenance.</item>
-            <item>Software engineers shall advance the integrity and reputation of the profession consistent with the public interest.</item>
-            <item>Software engineers shall be fair to and supportive of their colleagues.</item>
-            <item>Software engineers shall participate in lifelong learning regarding the practice of their profession and shall promote an ethical approach to the practice of the profession.</item>
+        <item>Public</item>
+        <item>Client and Employer</item>
+        <item>Product</item>
+        <item>Judgment</item>
+        <item>Management</item>
+        <item>Profession</item>
+        <item>Colleagues</item>
+        <item>Self</item>
 
-            <item>The waterfall Model illustrates the software development process in a linear sequential flow. This means that any phase in the development process begins only if the previous phase is complete. In this waterfall model, the phases do not overlap.</item>
-            <item>A model in which a prototype is built, tested, and then reworked as necessary until an acceptable prototype is finally achieved from which the complete system or product can now be developed.</item>
-            <item>The open source development model is characterized by a series of interwoven processes that continually improve code quality, instead of a strictly linear progression to a release.</item>
-            <item>Agile processes are based on adaptive software development methods. The agile teams work in close collaboration with each other and are most often located in the same geographical location.</item>
-            <item>Synchronize-and-stabilize is a software development life cycle model in which teams work in parallel on individual application modules, frequently synchronizing their code with that of other teams, and debugging code regularly throughout the development process</item>
-            <item>The spiral model is a risk-driven software development process model, based on the unique risk patterns of a large project.</item>
-        </string-array>
-    </resources>
+        <item>Watterfall Model</item>
+        <item>Chaos Model</item>
+        <item>Anti-Documentation Model</item>
+        <item>Rapid-Prototyping Model</item>
+        <item>Open Source Model</item>
+        <item>Agile Process</item>
+        <item>Synchronize and Stabilize Model</item>
+        <item>Spiral Model</item>
+    </string-array>
+
+
+    <string-array
+        name="backs">
+        <item>Star Platinum</item>
+        <item>Za Warudo</item>
+        <item>Killer Queen</item>
+        <item>Silver Chariot</item>
+        <item>Golden Experience</item>
+        <item>Sex Pistols</item>
+        <item>Tusk</item>
+        <item>Emperor</item>
+        <item>Echoes</item>
+        <item>Sticky Fingers</item>
+        <item>Crazy Diamond</item>
+        <item>The Fool</item>
+        <item>The Hand</item>
+        <item>Heaven\'s Door</item>
+
+        <item>Meow</item>
+        <item>Woof</item>
+        <item>Moo</item>
+        <item>Baa</item>
+
+        <item>White</item>
+        <item>Red</item>
+        <item>Purple</item>
+
+        <item>Level 1</item>
+        <item>Level 2</item>
+        <item>Level 3</item>
+        <item>Level 4</item>
+        <item>Level 5</item>
+
+        <item>Software engineers shall act consistently with the public interest.</item>
+        <item>Software engineers shall act in a manner that is in the best interests of their client and employer consistent with the public interest.</item>
+        <item>Software engineers shall ensure that their products and related modifications meet the highest professional standards possible.</item>
+        <item>Software engineers shall maintain integrity and independence in their professional judgment.</item>
+        <item>Software engineering managers and leaders shall subscribe to and promote an ethical approach to the management of software development and maintenance.</item>
+        <item>Software engineers shall advance the integrity and reputation of the profession consistent with the public interest.</item>
+        <item>Software engineers shall be fair to and supportive of their colleagues.</item>
+        <item>Software engineers shall participate in lifelong learning regarding the practice of their profession and shall promote an ethical approach to the practice of the profession.</item>
+
+        <item>The waterfall Model illustrates the software development process in a linear sequential flow. This means that any phase in the development process begins only if the previous phase is complete. In this waterfall model, the phases do not overlap.</item>
+        <item>The best model in the whole world. No question.</item>
+        <item>Who needs documentation? Not me, that\'s who.</item>
+        <item>A model in which a prototype is built, tested, and then reworked as necessary until an acceptable prototype is finally achieved from which the complete system or product can now be developed.</item>
+        <item>The open source development model is characterized by a series of interwoven processes that continually improve code quality, instead of a strictly linear progression to a release.</item>
+        <item>Agile processes are based on adaptive software development methods. The agile teams work in close collaboration with each other and are most often located in the same geographical location.</item>
+        <item>Synchronize-and-stabilize is a software development life cycle model in which teams work in parallel on individual application modules, frequently synchronizing their code with that of other teams, and debugging code regularly throughout the development process</item>
+        <item>The spiral model is a risk-driven software development process model, based on the unique risk patterns of a large project.</item>
+    </string-array>
+
 
 </resources>

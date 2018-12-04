@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -298,11 +299,6 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.add_demo_cards) {
-            addTestData();
-            return true;
-        }
-
         if (id == R.id.settings) {
             Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
             //settingsIntent.putExtra(EXTRA_MESSAGE);
@@ -319,12 +315,5 @@ public class MainActivity extends AppCompatActivity implements SetNameAdapter.It
         }
     }
 
-    private void addTestData() {
-        mCardViewModel.insertCard(new Card("Stands", "", ""));
-        mCardViewModel.insertCard(new Card("Animal Sounds", "", ""));
-        mCardViewModel.insertCard(new Card("Flowers", "", ""));
-        mCardViewModel.insertCard(new Card("CMM Levels", "", ""));
-        mCardViewModel.insertCard(new Card("Software Engineering Code of Ethics", "", ""));
-        mCardViewModel.insertCard(new Card("Stands", "", ""));
-    }
+
 }

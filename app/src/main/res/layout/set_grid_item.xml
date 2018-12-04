@@ -12,10 +12,11 @@
         android:layout_height="match_parent"
         android:background="@color/card_color"
         android:gravity="center"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMinTextSize="8sp"
+        android:padding="3dp"
         app:autoSizeMaxTextSize="16sp"
+        app:autoSizeMinTextSize="8sp"
         app:autoSizeStepGranularity="2sp"
+        app:autoSizeTextType="uniform"
         tools:ignore="MissingPrefix" />
 </LinearLayout>
 

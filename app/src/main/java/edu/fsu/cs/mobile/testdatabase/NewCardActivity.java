@@ -57,10 +57,10 @@ public class NewCardActivity extends AppCompatActivity {
 
     public void onActivityResult( int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        String[] cardData = data.getStringArrayExtra(OCRActivity.EXTRA_REPLY);
 
         if( requestCode == OCR_ACTIVITY_REQUEST_CODE ) {
             if( resultCode == RESULT_OK ) {
+                String[] cardData = data.getStringArrayExtra(OCRActivity.EXTRA_REPLY);
                 mEditFront.setText( cardData[0] );
                 mEditBack.setText( cardData[1] );
             }
